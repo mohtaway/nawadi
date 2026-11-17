@@ -281,9 +281,9 @@ table.t tr.bad td{background:#FFF4F6}
 .ys .tile b{display:block;font-size:22px;line-height:1.3;color:var(--navy);font-variant-numeric:tabular-nums}
 .ys .tile span{font-size:12px;color:var(--muted)}
 .ysg{margin:0 0 6px;font-size:14px;color:var(--teal-d);font-weight:800}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
-.chips button{border:1.5px solid var(--line);background:#fff;color:var(--navy);border-radius:99px;padding:5px 14px;font:inherit;font-size:13px;font-weight:700}
-.chips button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ysc{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.ysc button{border:1.5px solid var(--line);background:#fff;color:var(--navy);border-radius:99px;padding:5px 14px;font:inherit;font-size:13px;font-weight:700}
+.ysc button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .webbtns .btn{width:auto}
 .switch{display:flex;align-items:center;gap:14px}
 .switch button{width:64px;height:34px;border-radius:99px;border:0;background:#C9D1DB;position:relative}
@@ -893,16 +893,16 @@ function clItems(){
 }
 function clrReady(){const A=S.a, short=clItems().filter(r=>r.ret<r.given); return A.sign&&(A.cl!=='back'||short.every(r=>A.reasons[clItems().indexOf(r)]));}
 const NAV=[
- ['الإدارة الأساسية',[['إدارة النادي',[['br','الفروع','تعديل'],['prog','برامج الفرع','جديد'],'المجموعات','الحضور والغياب «يومي»','التحضير الأسبوعي']],['المتدربون',['قائمة المتدربين','أولياء الأمور','حسابات المتدربين','المدفوعات','الدفعات الحضورية','تقرير المستردات','تذكيرات الدفع','أكواد الخصم','تعليمات بطاقة العضوية','الزوار «تذكرة يوم»','تقرير الزوار اليومي','تفعيل/تعطيل الزوار']],['الرابح الأكثر',['الإنجازات','المخالفات','المكافآت','منح إنجاز','تسجيل مخالفة','أرشيف المخالفات','سجل النقاط','طلبات المكافآت','إحصائيات الرابح الأكثر','إحصائيات بالفرع','ترتيب الفروع','إصدار بطاقات','بيانات البطاقات']],['المناداة',['نظام المناداة','الأرشيف','التقارير','الإعدادات']]]],
+ ['الإدارة الأساسية',[['إدارة النادي',[['br','الفروع','تعديل'],['ys','ملخص السنة',''],['prog','برامج الفرع','جديد'],'المجموعات','الحضور والغياب «يومي»','التحضير الأسبوعي']],['المتدربون',['قائمة المتدربين','أولياء الأمور','حسابات المتدربين','المدفوعات','الدفعات الحضورية','تقرير المستردات','تذكيرات الدفع','أكواد الخصم','تعليمات بطاقة العضوية','الزوار «تذكرة يوم»','تقرير الزوار اليومي','تفعيل/تعطيل الزوار']],['الرابح الأكثر',['الإنجازات','المخالفات','المكافآت','منح إنجاز','تسجيل مخالفة','أرشيف المخالفات','سجل النقاط','طلبات المكافآت','إحصائيات الرابح الأكثر','إحصائيات بالفرع','ترتيب الفروع','إصدار بطاقات','بيانات البطاقات']],['المناداة',['نظام المناداة','الأرشيف','التقارير','الإعدادات']]]],
  ['الموظفون والتواصل',[['أسرة نوادي',['الموظفون',['ini','المبادرات','تعديل'],'تقرير المبادرات','جوائز تميز الفروع','إدخال معطيات التميز','المقترحات','إسناد المهام']],['التوظيف والتواصل',['طلبات التوظيف','ترشحات للتوظيف','أرشيف الطلبات','قوالب العقود','عقود الموظفين','ملاحظات التوظيف','التخصصات الوظيفية','المسميات الوظيفية','الجنسيات','المدن','رسائل التواصل','قائمة الانتظار','الإشعارات']]]],
  ['خدمات إضافية',[['الرحلات',['قائمة الرحلات','إضافة رحلة']],['المقصف',['منتجات المقصف','أقسام المقصف','طلبات المقصف','التقرير اليومي','فتح/إغلاق جميع المقاصف']]]],
  ['الموقع والمحتوى',[['البوابة الإعلامية',['البنر الرئيسي','الرؤية والرسالة','قسم من نحن','صفحة حول نوادي','صور الدائرة','البرامج','إحصائيات الصفحة الرئيسية','الأخبار','الصور','الفيديوهات','آراء العملاء','الشركاء','التواصل الاجتماعي']]]],
  ['العهد والمستودع',[['عهدي',null],['العهد والمستودع',['جرد المستودع','سندات التسليم','متابعة الفروع',['req','طلب العهد','جديد'],['buy','المشتريات','جديد'],['clr','إخلاء طرف','تعديل'],'إعدادات العهد','تشغيل النظام وإيقافه']]]],
  ['المسابقات',[['المسابقات',['قائمة المسابقات','إضافة مسابقة جديدة']]]],
- ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات',['ys','ملخص السنة','جديد'],'الشروط والسياسات','ملاحظات التسجيل','تفعيل/تعطيل التسجيل','حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
+ ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات',['ys','ملخص السنة',''],'الشروط والسياسات','ملاحظات التسجيل','تفعيل/تعطيل التسجيل','حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
 ];
 function navTree(A){
-  const leaf=x=>Array.isArray(x)?`<button data-sec="${x[0]}" class="sub ${A.sec===x[0]?'on':''}">${x[1]}<i class="nw">${x[2]}</i></button>`:`<button class="dim sub" data-act="a:noop">${x}</button>`;
+  const leaf=x=>Array.isArray(x)?`<button data-sec="${x[0]}" class="sub ${A.sec===x[0]?'on':''}">${x[1]}${x[2]?`<i class="nw">${x[2]}</i>`:''}</button>`:`<button class="dim sub" data-act="a:noop">${x}</button>`;
   return NAV.map(g=>`<span class="sg">${g[0]}</span>`+g[1].map(it=>it[1]?`<button class="dim par" data-nav="${it[0]}">${it[0]}<span class="car">${A.navOpen[it[0]]?'▾':'‹'}</span></button>${A.navOpen[it[0]]?it[1].map(leaf).join(''):''}`:`<button class="dim" data-act="a:noop">${it[0]}</button>`).join('')).join('');
 }
 function adminScreen(){
@@ -994,27 +994,28 @@ function adminScreen(){
       <div class="tblw"><table class="t" style="min-width:960px"><thead><tr><th>☐</th><th>#</th><th>اسم الفرع</th><th>المدينة</th><th>الجنس</th><th>الضريبة</th><th>المجموعات</th><th>الطلاب<br><small style="font-weight:400">الحالة الآن: نشط</small></th><th>طلاب السنة 2026 <span class="pill p-info">تصحيح</span><br><small style="font-weight:400">كل المسجلين</small></th><th>المنسحبون 2026</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>
       ${B.map((b,i)=>`<tr><td>☐</td><td>${ar(i+1)}</td><td>${b[0]}</td><td>${b[1]}</td><td>الكل</td><td>15%</td><td>${ar(b[2])}</td><td>${ar(b[3])}</td><td><b>${ar(b[4])}</b></td><td>${ar(b[5])}</td><td><span class="pill p-ok">نشط</span></td><td style="white-space:nowrap">${ic('#F0A91E','تعديل')}${ic('#22A6A1','الجداول')}${ic('#DDE6EE','التقرير')}${ic('#D9304C','حذف')}</td></tr>`).join('')}
       <tr><td></td><td></td><td><b>مجموع الفروع المعروضة</b></td><td></td><td></td><td></td><td>${ar(sum(2))}</td><td>${ar(sum(3))}</td><td><b>${ar(sum(4))}</b></td><td>${ar(sum(5))}</td><td></td><td></td></tr></tbody></table></div></div>
-    <div class="webbtns"><button class="btn alt" data-sec="ys">فتح ملخص السنة كامل</button></div>
+    <div class="webbtns"><button class="btn alt" data-sec="ys" data-ysall="1">عرض ملخص السنة لكل الفروع</button></div>
     <p class="muted" style="margin:0">الأسماء والأرقام هنا أمثلة للتوضيح. انتهاء الاشتراك ما يحذف سجل الطالب.</p>`;
   }
   if(A.sec==='ys'){
     const K=['reg','wd','par','emp','app','rev','ref','can','pres','abs','trips','tp','ini','cg','cr','cd','cm'];
     const B=[['النرجس',96,7,78,11,14,98000,4300,13600,2350,148,3,112,6,74,69,2,3],['الياسمين',131,12,104,14,19,133800,6200,18900,3210,197,4,158,7,96,90,3,3],['الواحة',58,4,47,7,9,59200,2100,8100,1410,88,2,71,4,48,45,1,2],['الربيع',77,9,61,9,12,78700,4400,10800,1880,121,3,96,4,58,53,2,3],['الندى',42,3,34,5,8,42900,1400,5900,990,58,2,49,2,34,31,1,2]];
+    if(!Number.isInteger(A.ysBr)||A.ysBr>=B.length)A.ysBr=-1;
     const rows=A.ysBr<0?B:[B[A.ysBr]];
     const v={}; K.forEach((k,i)=>v[k]=rows.reduce((a,b)=>a+b[i+1],0));
     const t=(n,l)=>`<div class="tile"><b>${ar(n)}</b><span>${l}</span></div>`;
     html=`<h2>ملخص السنة</h2>
-    <div class="card"><div class="row"><h4>حصيلة سنة 2026</h4><span class="pill p-info">جديد</span></div>
-      <p class="muted" style="margin:0 0 10px">صفحة وحدة فيها أرقام السنة كاملة. تختارون فرع أو كل الفروع، وتطبعونها PDF أو إكسل. الأرقام تنحسب من سجلات السنة نفسها، مو من الحالة اليوم، ومع إقفال السنة ينحفظ الملخص ويبقى مرجع لها.</p>
-      <div class="chips" role="group" aria-label="الفرع"><button data-ysbr="-1" class="${A.ysBr<0?'on':''}">كل الفروع</button>${B.map((b,i)=>`<button data-ysbr="${i}" class="${A.ysBr===i?'on':''}">${b[0]}</button>`).join('')}</div>
+    <div class="card"><div class="row"><h4>حصيلة سنة 2026</h4><span class="pill p-info">للمراجعة</span></div>
+      <p class="muted" style="margin:0 0 10px">هذا تصور أولي لملخص السنة بالأرقام اللي تحت، نراجعه معكم ونثبت القائمة المطلوبة. تختارون فيه فرع أو كل الفروع، ومعه طباعة PDF وتصدير إكسل. المطلوب تكون الأرقام من سجلات السنة نفسها وتبقى مرجع ثابت لها، وطريقة الحساب والحفظ نثبتها بعد مراجعة السجلات.</p>
+      <div class="ysc" role="group" aria-label="الفرع"><button data-ysbr="-1" class="${A.ysBr<0?'on':''}">كل الفروع</button>${B.map((b,i)=>`<button data-ysbr="${i}" class="${A.ysBr===i?'on':''}">${b[0]}</button>`).join('')}</div>
       <div class="webbtns" style="margin:0 0 14px"><button class="btn" data-act="a:yspdf">طباعة PDF</button><button class="btn alt" data-act="a:ysxls">تصدير إكسل</button></div>
       <h4 class="ysg">الطلاب</h4><div class="ys">${t(v.reg,'المسجلون خلال السنة، مع المنسحبين')}${t(v.wd,'المنسحبون')}</div>
       <h4 class="ysg">الحسابات والتوظيف</h4><div class="ys">${t(v.par,'حسابات أولياء الأمور')}${t(v.emp,'حسابات الموظفات والموظفين')}${t(v.app,'طلبات التوظيف')}</div>
       <h4 class="ysg">الإيرادات (ريال)</h4><div class="ys">${t(v.rev,'التسجيل: المحصل')}${t(v.ref,'التسجيل: المسترجع')}${t(v.rev-v.ref,'التسجيل: الصافي')}${t(v.can,'المقصف')}</div>
-      <h4 class="ysg">الحضور والأنشطة</h4><div class="ys">${t(v.pres,'مرات الحضور')}${t(v.abs,'مرات الغياب')}${t(v.trips,'الرحلات')}${t(v.tp,'المشاركون في الرحلات')}${t(v.ini,'المبادرات')}</div>
-      <h4 class="ysg">العهد</h4><div class="ys">${t(v.cg,'أصناف مسلّمة')}${t(v.cr,'أصناف راجعة')}${t(v.cd,'تالفة')}${t(v.cm,'ناقصة')}</div>
+      <h4 class="ysg">الحضور والأنشطة</h4><div class="ys">${t(v.pres,'مرات الحضور')}${t(v.abs,'مرات الغياب')}${t(v.trips,'الرحلات')}${t(v.tp,'المشاركات في الرحلات، وقد يتكرر الطالب')}${t(v.ini,'المبادرات')}</div>
+      <h4 class="ysg">العهد (بعدد القطع)</h4><div class="ys">${t(v.cg,'كمية مسلّمة')}${t(v.cr,'كمية راجعة')}${t(v.cd,'كمية تالفة')}${t(v.cm,'كمية ناقصة')}</div>
       ${A.ysBr<0?`<h4 class="ysg">تفصيل الفروع</h4><div class="tblw"><table class="t"><thead><tr><th>الفرع</th><th>المسجلون</th><th>المنسحبون</th><th>صافي التسجيل</th><th>المقصف</th></tr></thead><tbody>${B.map(b=>`<tr><td>${b[0]}</td><td>${ar(b[1])}</td><td>${ar(b[2])}</td><td>${ar(b[6]-b[7])}</td><td>${ar(b[8])}</td></tr>`).join('')}<tr><td><b>الإجمالي</b></td><td><b>${ar(v.reg)}</b></td><td><b>${ar(v.wd)}</b></td><td><b>${ar(v.rev-v.ref)}</b></td><td><b>${ar(v.can)}</b></td></tr></tbody></table></div>`:''}</div>
-    <p class="muted" style="margin:0">الأسماء والأرقام هنا أمثلة للتوضيح. قائمة الأرقام نعتمدها معكم، وأي رقم سجلاته القديمة ناقصة ينكتب بجنبه «غير متاح» بدل رقم غير دقيق.</p>`;
+    <p class="muted" style="margin:0">الأسماء والأرقام هنا أمثلة للتوضيح. قائمة الأرقام نعتمدها معكم، وبعد مراجعة السجلات نوضح جنب كل رقم إذا كانت بياناته القديمة ناقصة.</p>`;
   }
   if(A.sec==='prog'){
     html=`<h2>برامج الفرع</h2>
@@ -1075,7 +1076,7 @@ document.addEventListener('click',e=>{
   if(d.nav){A.navOpen[d.nav]=!A.navOpen[d.nav];render();return;}
   if(d.who){A.who=d.who;render();return;}
   if(d.ysbr!==undefined){A.ysBr=+d.ysbr;render();return;}
-  if(d.sec){A.sec=d.sec;render();return;}
+  if(d.sec){if(d.sec==='ys'&&d.ysall)A.ysBr=-1;A.sec=d.sec;render();return;}
   if(d.conf!==undefined){const r=A.clItems[+d.conf]; r.ret=r.given; A.reasons[+d.conf]='استُكمل وتأكد استلامه'; render(); webToast('تأكد استلام الاستكمال'); return;}
   if(d.delrow!==undefined){A.rows.splice(+d.delrow,1);render();return;}
   if(d.buyin!==undefined){if(A.clItems&&A.cl!=='ok'){ if(A.cl!=='check'){webToast('الكشف في مرحلة الجرد. يدخل هذا الشراء بعد حفظ الكشف');return;} const p=A.purch[+d.buyin]; p.st='in'; A.clItems.push({name:p.item,src:'مشتريات أثناء العمل',given:p.qty,ret:p.qty}); render(); webToast('دخل الشراء على الفرع، وانضاف للكشف المرسل للمدير'); return;}A.purch[+d.buyin].st='in';render();webToast('دخل الصنف على الفرع وحُفظ');return;}
@@ -1125,8 +1126,8 @@ document.addEventListener('click',e=>{
     if(a==='issue'){A.issued=true;render();webToast('صدر سند التسليم بالأصناف المتوفرة');return;}
     if(a==='buyadd'){const it=$('#b1').value.trim()||'صنف'; A.purch.push({item:it,qty:Math.max(1,Math.floor(+($('#b2').value)||1)),cond:$('#b3').value,place:$('#b4').value||'—',note:$('#b5').value||'',st:'wait'}); render(); webToast('سُجّل الشراء ووصل لمسؤول العهد آلياً'); return;}
     if(a==='progadd'){const v=($('#pn').value||'').trim(); if(v){A.progs.push({n:v,on:true}); render(); webToast('أُضيف البرنامج');} return;}
-    if(a==='yspdf'){webToast('تم تجهيز ملف PDF لملخص سنة 2026');return;}
-    if(a==='ysxls'){webToast('تم تجهيز ملف إكسل لملخص سنة 2026');return;}
+    if(a==='yspdf'){webToast('زر توضيحي للطباعة، المحاكاة ما تنزل ملف');return;}
+    if(a==='ysxls'){webToast('زر توضيحي للتصدير، المحاكاة ما تنزل ملف');return;}
     if(a==='progsave'){webToast('حُفظت برامج الفرع، وتنعكس في الموقع والتطبيق');return;}
     if(a==='additem'){const q=Math.max(1,Math.floor(+($('#c3').value)||1)); A.rows.push({cat:$('#c1').value,item:$('#c2').value,qty:q,note:$('#c4').value.trim()}); render(); webToast('أُضيف الصنف للطلب'); return;}
     if(a==='report'){webToast('يوصل بلاغك لمسؤول العهد مثل اليوم');return;}
