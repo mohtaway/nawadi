@@ -870,7 +870,7 @@ const E_STEPS=[
 function cycle(sec){
   const ph=[['req','بداية الفترة: الطلب والتسليم',[['مدير الفرع يطلب العهد (الصنف، العدد، ملاحظات)',1],['مسؤول العهد يصرف المتوفر ويحدد غير المتوفر',1],['يرجع الطلب للمدير «سند تسليم واستلام»',0],['المدير يقر بالاستلام',0]]],
             ['buy','أثناء العمل: المشتريات',[['مدير الفرع يشتري ما ينقصه أو غير المتوفر',1],['يسجل كل شراء أول بأول',1],['يوصل آلياً لمسؤول العهد، ويدخله على الفرع ويُحفظ',1]]],
-            ['clr','نهاية الفترة: الكشف والجرد والإخلاء',[['مسؤول العهد يرسل للمدير كشفاً بعهدة الفرع: القديمة والمشتراة',1],['المدير يشيّك على الكشف، يضبط الأعداد، ويسلّم',1],['مسؤول العهد يجرد ويشوف الناقص',0],['إعادة للاستكمال مع ملاحظة النقص',0],['المدير يوقّع، أو يكتب سبب النقص: تالف، مفقود، غير صالح',1],['يرجع الكشف لمسؤول العهد ويُحفظ في النظام',0]]]];
+            ['clr','نهاية الفترة: الكشف والجرد والإخلاء',[['مسؤول العهد يرسل للمدير كشفاً بعهدة الفرع: القديمة والمشتراة',1],['المدير يشيّك على الكشف، يضبط الأعداد، ويسلّم',1],['مسؤول العهد يجرد ويشوف الناقص',0],['إعادة للاستكمال مع ملاحظة النقص',0],['المدير يوقّع، ومع النقص يكتب السبب: تالف، مفقود، غير صالح…',1],['يرجع الكشف لمسؤول العهد ويُحفظ في النظام',0]]]];
   return `<div class="cycle">${ph.map(p=>`<button data-sec="${p[0]}" class="${sec===p[0]?'on':''}"><b>${p[1]}</b>${p[2].map(x=>`<span class="${x[1]?'nw':''}">${x[0]}</span>`).join('')}</button>`).join('')}</div><p class="muted" style="margin:0">نفس ترتيب مخططكم وملاحظاتكم: تبدأ من طلب مدير الفرع، وغير المتوفر يشتريه الفرع أثناء العمل ويدخل عهدة عليه. وأثناء العمل كل شراء يتسجل أول بأول. وفي نهاية الفترة يرسل مسؤول العهد للمدير كشفاً بكل عهدته القديمة والمشتراة، يطابقه المدير ويرجعه، وتنتهي بحفظ الكشف في النظام. الملوّن جديد، والباقي يعمل عندكم اليوم، ومتابعة عهد الفروع مستمرة طول الفترة.</p>`;
 }
 function clItems(){
@@ -878,7 +878,7 @@ function clItems(){
   if(A.clItems) return A.clItems;
   const AV={'كرات سلة':7,'مكعبات بناء':5,'ألوان خشبية':20,'أقماع تدريب':0};
   const loss={'كرات سلة':1,'مكعبات بناء':2};
-  const base=A.issued?A.rows.map(r=>({name:r.item,src:'عهدة بداية العمل',given:Math.min(r.qty,AV[r.item]??r.qty)})).filter(r=>r.given>0)
+  const base=A.ack?A.rows.map(r=>({name:r.item,src:'عهدة بداية العمل',given:Math.min(r.qty,AV[r.item]??r.qty)})).filter(r=>r.given>0)
     :[{name:'كرات سلة',src:'عهدة بداية العمل',given:7},{name:'ألوان خشبية',src:'عهدة بداية العمل',given:20},{name:'مكعبات بناء',src:'عهدة بداية العمل',given:5}];
   const bought=A.purch.filter(p=>p.st==='in').map(p=>({name:p.item,src:'مشتريات أثناء العمل',given:p.qty}));
   return base.concat(bought).map(r=>({...r,ret:r.src==='عهدة بداية العمل'?Math.max(0,r.given-(loss[r.name]||0)):r.given}));
@@ -914,7 +914,7 @@ function adminScreen(){
           <div class="webbtns"><button class="btn" data-act="a:ack" ${A.pledge?'':'disabled'}>أقرّ بالاستلام</button><button class="linkb" data-act="a:report">الإبلاغ عن خطأ في السند</button></div>`
         :A.ack?`<p class="muted" style="margin:0 0 6px">أقررت بالاستلام. هذي العهد اللي راحت لك، وتظهر في «عهدي»:</p>
           <div class="tblw" style="margin-bottom:10px"><table class="t"><thead><tr><th>الصنف</th><th>العدد المستلم</th></tr></thead><tbody>${A.rows.filter(r=>av(r)>0).map(r=>`<tr><td>${r.item}</td><td>${ar(av(r))}</td></tr>`).join('')}</tbody></table></div>
-          ${miss.length?`<div class="card" style="border-color:#F3C1CC"><div class="row"><h4>غير متوفر في المستودع</h4><span class="pill p-no">اشترِه</span></div><p class="muted" style="margin:0 0 10px">${miss.map(r=>r.item+': '+ar(r.qty-av(r))).join('، ')}. اشترِه للفرع وسجّله في المشتريات عشان يدخل عهدة على فرعك.</p><div class="webbtns"><button class="btn" data-sec="buy">تسجيل الشراء</button></div></div>`:''}`
+          ${miss.length?`<div class="card" style="border-color:#F3C1CC"><div class="row"><h4>غير متوفر في المستودع</h4><span class="pill p-no">غير متوفر</span></div><p class="muted" style="margin:0 0 10px">${miss.map(r=>r.item+': '+ar(r.qty-av(r))).join('، ')}. إذا احتجته تقدر تشتريه للفرع، وتسجله في المشتريات عشان يدخل عهدة على فرعك.</p><div class="webbtns"><button class="btn" data-sec="buy">تسجيل الشراء</button></div></div>`:''}`
         :'<p class="muted" style="margin:0">بدّل إلى «مسؤول العهد» أعلى اللوحة لتشوف الطلب من جهته.</p>'}</div>`:`
       <div class="grid2"><div class="field"><span>التصنيف</span><select id="c1"><option>أدوات رياضية</option><option>قرطاسية</option><option>ألعاب</option></select></div><div class="field"><span>الصنف</span><select id="c2"><option>أقماع تدريب</option><option>كرات سلة</option><option>ألوان خشبية</option><option>مكعبات بناء</option></select></div><div class="field"><span>العدد</span><input id="c3" value="8" inputmode="numeric"></div><div class="field"><span>ملاحظات</span><input id="c4" value="للتمارين الصباحية"></div></div>
       <div class="webbtns"><button class="btn alt" data-act="a:additem">+ إضافة الصنف للطلب</button></div>
@@ -941,23 +941,24 @@ function adminScreen(){
     const srcP=r=>r.src==='مشتريات أثناء العمل'?'<span class="pill p-pur">مشتراة أثناء العمل</span>':'<span class="pill p-info">عهدة بداية العمل</span>';
     const T=(cols,rows)=>`<div class="tblw"><table class="t"><thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
     const wait=t=>`<div class="card"><h4>${t}</h4></div>`;
-    const full=T(['الصنف','المصدر','العدد في الكشف','الموجود عند المدير','الناقص','السبب'],items.map(r=>`<tr class="${r.ret<r.given?'bad':''}"><td>${r.name}</td><td>${srcP(r)}</td><td>${ar(r.given)}</td><td>${ar(r.ret)}</td><td>${r.given-r.ret>0?ar(r.given-r.ret):r.ret>r.given?'زيادة '+ar(r.ret-r.given):'—'}</td><td>${A.reasons[items.indexOf(r)]||'—'}</td></tr>`).join(''));
+    const full=T(['الصنف','المصدر','العدد في الكشف','عدّ المدير','جرد مسؤول العهد','الناقص','رد المدير'],items.map(r=>`<tr class="${r.ret<r.given?'bad':''}"><td>${r.name}</td><td>${srcP(r)}</td><td>${ar(r.given)}</td><td>${ar(r.mg??r.ret)}</td><td>${st==='count'&&mgr?'—':ar(r.ret)}</td><td>${r.given-r.ret>0?ar(r.given-r.ret):r.ret>r.given?'زيادة '+ar(r.ret-r.given):'—'}</td><td>${A.reasons[items.indexOf(r)]||'—'}</td></tr>`).join(''));
     let body='';
     if(st==='list') body=mgr?wait('بانتظار كشف العهد من مسؤول العهد')+'<p class="muted" style="margin:0">بدّل إلى «مسؤول العهد» ليرسل لك كشف عهدة الفرع.</p>'
-      :`<p class="muted" style="margin:0">كشف عهدة فرع النرجس: كل اللي عنده، القديمة اللي استلمها بداية العمل، والمشتراة أثناء العمل.</p>
+      :`<div class="grid2"><div class="field"><span>الفرع (لكل فرع كشفه)</span><select><option>فرع النرجس</option><option>فرع الياسمين</option><option>فرع الملقا</option></select></div></div>
+        <p class="muted" style="margin:0">كشف عهدة فرع النرجس: كل اللي عنده، القديمة اللي استلمها بداية العمل، والمشتراة أثناء العمل.</p>
         ${T(['الصنف','المصدر','العدد'],items.map(r=>`<tr><td>${r.name}</td><td>${srcP(r)}</td><td>${ar(r.given)}</td></tr>`).join(''))}
         ${pend?`<div class="card" style="border-color:#F0E3C2"><p class="muted" style="margin:0">تنبيه: فيه ${ar(pend)} شراء مسجل ما دخل على الفرع لسه. ادخله من «المشتريات» أول، عشان يطلع في الكشف.</p></div>`:''}
         <div class="webbtns"><button class="btn" data-act="a:sendlist" ${pend?'disabled':''}>إرسال الكشف لمدير الفرع</button>${pend?'<button class="btn alt" data-sec="buy">فتح المشتريات</button>':''}</div>`;
     if(st==='check') body=mgr?`<div class="card" style="border-color:var(--gold)"><div class="row"><h4>وصلك كشف بكل العهد اللي عندك</h4><span class="pill p-wait">من مسؤول العهد</span></div><p class="muted" style="margin:0">القديمة والمشتراة مع بعض. شيّك عليها، واكتب العدد الموجود عندك فعلاً لكل صنف، ثم أرسل الكشف.</p></div>
         ${T(['الصنف','المصدر','العدد في الكشف','الموجود عندي'],items.map((r,i)=>`<tr><td>${r.name}</td><td>${srcP(r)}</td><td>${ar(r.given)}</td><td><input data-cnt="${i}" value="${r.ret}" inputmode="numeric" style="width:70px;text-align:center"></td></tr>`).join(''))}
-        <div class="webbtns"><button class="btn" data-act="a:sendcheck">إرسال الكشف لمسؤول العهد</button></div>`
+        <div class="webbtns"><button class="btn" data-act="a:sendcheck">تسليم العهد وإرسال الكشف لمسؤول العهد</button></div>`
       :wait('الكشف عند مدير الفرع، يطابقه بالموجود عنده');
     if(st==='count') body=mgr?wait('أرسلت الكشف، ومسؤول العهد يجرد الحين')+full
       :`<p class="muted" style="margin:0">رجع الكشف من مدير الفرع. اجرد العهد واكتب العدد اللي لقيته لكل صنف: ${need?ar(need)+' أصناف فيها نقص.':'لا نواقص.'}</p>
         ${T(['الصنف','المصدر','العدد في الكشف','عدّ المدير','جرد مسؤول العهد','الناقص'],items.map((r,i)=>`<tr class="${r.ret<r.given?'bad':''}"><td>${r.name}</td><td>${srcP(r)}</td><td>${ar(r.given)}</td><td>${ar(r.mg??r.ret)}</td><td><input data-cnt="${i}" value="${r.ret}" inputmode="numeric" style="width:70px;text-align:center"></td><td>${r.given-r.ret>0?ar(r.given-r.ret):'—'}</td></tr>`).join(''))}
         <div class="webbtns">${need?'<button class="btn" data-act="a:back">إعادة للمدير لاستكمال النقص</button>':'<button class="btn" data-act="a:endcount">لا نواقص: إرسال للمدير للتوقيع</button>'}</div>`;
     if(st==='back') body=mgr?`<div class="card" style="border-color:#F3C1CC"><div class="row"><h4>ملاحظة من مسؤول العهد</h4><span class="pill p-no">${ar(need)} نواقص</span></div><p style="margin:0">عندكم نقص: ${short.map(r=>r.name+' ('+ar(r.given-r.ret)+')').join('، ')}. نأمل إفادتنا عن سبب النقص.</p></div>
-        ${T(['الصنف','الناقص','استكمال النقص أو سببه'],short.map(r=>`<tr class="bad"><td>${r.name}</td><td>${ar(r.given-r.ret)}</td><td><select data-rsn="${items.indexOf(r)}">${['اختر','تالف','مفقود','غير صالح','استكملت النقص وسلّمته'].map((o,k)=>`<option ${k===0?'value=""':''} ${A.reasons[items.indexOf(r)]===o?'selected':''}>${o}</option>`).join('')}</select></td></tr>`).join(''))}
+        ${T(['الصنف','الناقص','استكمال النقص أو سببه'],short.map(r=>`<tr class="bad"><td>${r.name}</td><td>${ar(r.given-r.ret)}</td><td><select data-rsn="${items.indexOf(r)}">${['اختر','تالف','مفقود','غير صالح','سبب آخر (اكتبه في الملاحظة)','استكملت النقص وسلّمته'].map((o,k)=>`<option ${k===0?'value=""':''} ${A.reasons[items.indexOf(r)]===o?'selected':''}>${o}</option>`).join('')}</select></td></tr>`).join(''))}
         <div class="field"><span>ملاحظة (اختياري)</span><input id="just" value="${A.just}" placeholder="أي توضيح إضافي عن النقص"></div>
         <label class="chk ${A.sign?'on':''}"><input type="checkbox" id="sign" ${A.sign?'checked':''}> أقر بصحة البيانات وأوقّع على الكشف</label>
         <div class="webbtns"><button class="btn" data-act="a:clrsend" ${clrReady()?'':'disabled'}>إرسال الكشف لمسؤول العهد</button></div>`
@@ -965,7 +966,9 @@ function adminScreen(){
     if(st==='sign') body=mgr?`<label class="chk ${A.sign?'on':''}"><input type="checkbox" id="sign" ${A.sign?'checked':''}> أوقّع إخلاء الطرف بدون ملاحظات</label><div class="webbtns"><button class="btn" data-act="a:clrsend" ${clrReady()?'':'disabled'}>توقيع وإرسال</button></div>`
       :wait('الكشف عند مدير الفرع للتوقيع');
     if(st==='sent') body=mgr?wait('أرسلت الكشف، وبانتظار حفظه عند مسؤول العهد')
-      :`<div class="card"><h4>${need?'رجع الكشف من مدير الفرع ومعه أسباب النقص':'وقّع مدير الفرع بدون ملاحظات'}</h4>${A.just?`<p style="margin:6px 0 0">ملاحظة المدير: ${A.just}</p>`:''}</div>${full}<div class="webbtns"><button class="btn" data-act="a:clrok">حفظ الكشف في النظام</button></div>`;
+      :`<div class="card"><h4>${A.hadShort?'رجع الكشف من مدير الفرع ومعه رده على النقص':'وقّع مدير الفرع بدون ملاحظات'}</h4>${A.just?`<p style="margin:6px 0 0">ملاحظة المدير: ${A.just}</p>`:''}</div>${full}
+        ${items.some((r,i)=>A.reasons[i]==='استكملت النقص وسلّمته')?`<div class="card" style="border-color:#F0E3C2"><p class="muted" style="margin:0 0 8px">المدير يقول إنه استكمل هذي الأصناف. تأكد من استلامها:</p>${items.map((r,i)=>A.reasons[i]==='استكملت النقص وسلّمته'?`<div class="row" style="margin-bottom:6px"><span>${r.name} (${ar(r.given-r.ret)})</span><button class="btn alt" style="width:auto;padding:5px 12px;font-size:13px" data-conf="${i}">استلمت الاستكمال</button></div>`:'').join('')}</div>`:''}
+        <div class="webbtns"><button class="btn" data-act="a:clrok" ${items.some((r,i)=>A.reasons[i]==='استكملت النقص وسلّمته')?'disabled':''}>حفظ الكشف في النظام</button></div>`;
     if(st==='ok') body=`<div class="card"><div class="row"><h4>الكشف محفوظ في النظام</h4><span class="pill p-ok">محفوظ</span></div></div>${full}<div class="webbtns"><button class="btn alt" data-act="a:clreset">إعادة التجربة</button></div>`;
     const ix={list:0,check:1,count:2,back:3,sign:3,sent:4,ok:5}[st];
     html=`<h2>كشف عهد نهاية الفترة — إخلاء طرف</h2>
@@ -1031,8 +1034,9 @@ document.addEventListener('click',e=>{
   if(d.nav){A.navOpen[d.nav]=!A.navOpen[d.nav];render();return;}
   if(d.who){A.who=d.who;render();return;}
   if(d.sec){A.sec=d.sec;render();return;}
+  if(d.conf!==undefined){const r=A.clItems[+d.conf]; r.ret=r.given; A.reasons[+d.conf]='استُكمل وتأكد استلامه'; render(); webToast('تأكد استلام الاستكمال'); return;}
   if(d.delrow!==undefined){A.rows.splice(+d.delrow,1);render();return;}
-  if(d.buyin!==undefined){if(A.clItems){ if(A.cl!=='check'){webToast('الكشف في مرحلة الجرد. يدخل هذا الشراء بعد حفظ الكشف');return;} const p=A.purch[+d.buyin]; p.st='in'; A.clItems.push({name:p.item,src:'مشتريات أثناء العمل',given:p.qty,ret:p.qty}); render(); webToast('دخل الشراء على الفرع، وانضاف للكشف المرسل للمدير'); return;}A.purch[+d.buyin].st='in';render();webToast('دخل الصنف على الفرع وحُفظ');return;}
+  if(d.buyin!==undefined){if(A.clItems&&A.cl!=='ok'){ if(A.cl!=='check'){webToast('الكشف في مرحلة الجرد. يدخل هذا الشراء بعد حفظ الكشف');return;} const p=A.purch[+d.buyin]; p.st='in'; A.clItems.push({name:p.item,src:'مشتريات أثناء العمل',given:p.qty,ret:p.qty}); render(); webToast('دخل الشراء على الفرع، وانضاف للكشف المرسل للمدير'); return;}A.purch[+d.buyin].st='in';render();webToast('دخل الصنف على الفرع وحُفظ');return;}
   const act=d.act; if(!act) return;
   const [k,a]=act.split(':');
   if(k==='p'){
@@ -1083,12 +1087,12 @@ document.addEventListener('click',e=>{
     if(a==='additem'){const q=Math.max(1,Math.floor(+($('#c3').value)||1)); A.rows.push({cat:$('#c1').value,item:$('#c2').value,qty:q,note:$('#c4').value.trim()}); render(); webToast('أُضيف الصنف للطلب'); return;}
     if(a==='report'){webToast('يوصل بلاغك لمسؤول العهد مثل اليوم');return;}
     if(a==='sendlist'){A.clItems=clItems();A.cl='check';render();webToast('أُرسل الكشف لمدير الفرع');return;}
-    if(a==='sendcheck'){A.clItems.forEach(r=>r.mg=r.ret);A.cl='count';render();webToast('وصل الكشف لمسؤول العهد');return;}
-    if(a==='back'){A.cl='back';render();webToast('أُعيد الكشف لمدير الفرع مع ملاحظة النقص');return;}
+    if(a==='sendcheck'){if(A.purch.some(p=>p.st!=='in')){webToast('فيه شراء مسجل ما دخل على الفرع. مسؤول العهد يدخله أول عشان ينضاف للكشف');return;} A.clItems.forEach(r=>r.mg=r.ret);A.cl='count';render();webToast('وصل الكشف لمسؤول العهد');return;}
+    if(a==='back'){A.hadShort=true;A.cl='back';render();webToast('أُعيد الكشف لمدير الفرع مع ملاحظة النقص');return;}
     if(a==='endcount'){A.cl='sign';render();webToast('وصل الكشف لمدير الفرع للتوقيع');return;}
-    if(a==='clrsend'){A.clItems.forEach((r,i)=>{if(A.reasons[i]==='استكملت النقص وسلّمته'){r.ret=r.given;A.reasons[i]='استُكمل';}});A.cl='sent';render();webToast('رجع الكشف لمسؤول العهد');return;}
+    if(a==='clrsend'){A.cl='sent';render();webToast('رجع الكشف لمسؤول العهد');return;}
     if(a==='clrok'){A.cl='ok';render();webToast('حُفظ الكشف في النظام');return;}
-    if(a==='clreset'){A.cl='list';A.clItems=null;A.reasons={};A.just='';A.sign=false;render();return;}
+    if(a==='clreset'){A.hadShort=false;A.cl='list';A.clItems=null;A.reasons={};A.just='';A.sign=false;render();return;}
     if(a==='toggle'){A.open=!A.open;A.log.unshift((A.open?'تم الفتح':'تم الإغلاق')+' — مسؤول النظام — الآن');render();return;}
   }
 });
