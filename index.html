@@ -817,7 +817,7 @@ const E_STEPS=[
 
 /* ===== لوحة الموقع ===== */
 function cycle(sec){
-  const ph=[['req','بداية الفترة: الطلب والتسليم',[['مدير الفرع يطلب العهد (الصنف، العدد، ملاحظات)',1],['مسؤول العهد يصرف المتوفر ويحدد غير المتوفر',1],['سند التسليم',0],['إقرار المدير بالاستلام',0]]],
+  const ph=[['req','بداية الفترة: الطلب والتسليم',[['مسؤول العهد يرسل للفرع عهدته: المجرودة + المشتريات',1],['مدير الفرع يشوف كل عهده بقائمة وحدة',1],['مدير الفرع يطلب الناقص (الصنف، العدد، ملاحظات)',1],['مسؤول العهد يصرف المتوفر ويحدد غير المتوفر',1],['سند التسليم',0],['إقرار المدير بالاستلام',0]]],
             ['buy','خلال الفترة: شراء غير المتوفر',[['مدير الفرع يشتري غير المتوفر',1],['يسجله في المشتريات',1],['مسؤول العهد يراجع ويدخله عهدة على الفرع',1]]],
             ['clr','نهاية الفترة: التسليم والجرد والإخلاء',[['المدير يسلّم العهد كاملة',0],['مسؤول العهد يجرد ما استلمه',0],['إعادة للاستكمال عند النقص',0],['المدير يوقّع أو يكتب مبرراته',1],['يرجع لمسؤول العهد ويُحفظ',0]]]];
   return `<div class="cycle">${ph.map(p=>`<button data-sec="${p[0]}" class="${sec===p[0]?'on':''}"><b>${p[1]}</b>${p[2].map(x=>`<span class="${x[1]?'nw':''}">${x[0]}</span>`).join('')}</button>`).join('')}</div><p class="muted" style="margin:0">نفس ترتيب مخططكم وملاحظاتكم: تبدأ من طلب مدير الفرع، وغير المتوفر يشتريه الفرع ويدخل عهدة عليه، وتنتهي بتوقيعه. الملوّن جديد، والباقي يعمل عندكم اليوم، ومتابعة عهد الفروع مستمرة طول الفترة.</p>`;
@@ -854,8 +854,12 @@ function adminScreen(){
     const AV={'كرات سلة':7,'مكعبات بناء':5,'ألوان خشبية':20,'أقماع تدريب':0};
     const av=r=>Math.min(r.qty, AV[r.item]??r.qty);
     const miss=A.rows.filter(r=>av(r)<r.qty);
+    const cur=[['كرات سلة',7,'جرد بداية العمل'],['ألوان خشبية',20,'جرد بداية العمل'],['مكعبات بناء',5,'جرد بداية العمل'],['صافرات تدريب',4,'مشتريات الفرع']].concat(A.purch.filter(p=>p.st==='in').map(p=>[p.item,p.qty,'مشتريات الفرع']));
+    const curTbl=`<div class="card"><div class="row"><h4>${mgr?'عهدتك الحالية — وصلتك من مسؤول العهد':'أرسلت لفرع النرجس قائمة عهدته'}</h4><span class="pill p-ok">${ar(cur.length)} أصناف</span></div>
+      <p class="muted" style="margin:0 0 8px">قائمة وحدة فيها كل عهد الفرع: اللي انجرد بداية العمل، ومعها المشتريات اللي انضافت.</p>
+      <div class="tblw"><table class="t"><thead><tr><th>الصنف</th><th>العدد</th><th>المصدر</th></tr></thead><tbody>${cur.map(r=>`<tr><td>${r[0]}</td><td>${ar(r[1])}</td><td>${r[2]==='مشتريات الفرع'?'<span class="pill p-pur">مشتريات الفرع</span>':'<span class="pill p-info">جرد بداية العمل</span>'}</td></tr>`).join('')}</tbody></table></div></div>`;
     html=`<h2>طلب العهد</h2>
-    <div class="flow"><span class="${A.reqSent?'ok':'on'}">1. مدير الفرع يطلب</span><span class="${A.issued?'ok':A.reqSent?'on':''}">2. مسؤول العهد يصرف المتوفر</span><span class="${A.ack?'ok':A.issued?'on':''}">3. سند التسليم وإقرار المدير</span></div>
+    <div class="flow"><span class="ok">0. مسؤول العهد يرسل عهدة الفرع</span><span class="${A.reqSent?'ok':'on'}">1. مدير الفرع يطلب الناقص</span><span class="${A.issued?'ok':A.reqSent?'on':''}">2. مسؤول العهد يصرف المتوفر</span><span class="${A.ack?'ok':A.issued?'on':''}">3. سند التسليم وإقرار المدير</span></div>
     ${mgr?(A.reqSent?`<div class="card"><div class="row"><h4>طلبك أُرسل لمسؤول العهد</h4><span class="pill ${A.issued?'p-ok':'p-wait'}">${A.ack?'استلمت العهد':A.issued?'صدر السند':'بانتظار المراجعة'}</span></div>
         ${A.issued&&!A.ack?`<p class="muted" style="margin:0 0 10px">وصلك سند التسليم SND-0142 بالأصناف المتوفرة.</p>
           <label class="chk ${A.pledge?'on':''}"><input type="checkbox" id="pledge" ${A.pledge?'checked':''}> أتعهد بالمحافظة على العهدة وإعادتها نهاية الفترة</label>
@@ -863,11 +867,12 @@ function adminScreen(){
         :A.ack?`<p class="muted" style="margin:0 0 10px">أقررت بالاستلام، والعهد تظهر في «عهدي».</p>
           ${miss.length?`<div class="card" style="border-color:#F3C1CC"><div class="row"><h4>غير متوفر في المستودع</h4><span class="pill p-no">اشترِه</span></div><p class="muted" style="margin:0 0 10px">${miss.map(r=>r.item+': '+ar(r.qty-av(r))).join('، ')}. اشترِه للفرع وسجّله في المشتريات عشان يدخل عهدة على فرعك.</p><div class="webbtns"><button class="btn" data-sec="buy">تسجيل الشراء</button></div></div>`:''}`
         :'<p class="muted" style="margin:0">بدّل إلى «مسؤول العهد» أعلى اللوحة لتشوف الطلب من جهته.</p>'}</div>`:`
+      ${curTbl}<h4 style="margin:6px 0 0">تحتاج أصنافاً زيادة؟ اطلبها هنا</h4>
       <div class="grid2"><div class="field"><span>التصنيف</span><select id="c1"><option>أدوات رياضية</option><option>قرطاسية</option><option>ألعاب</option></select></div><div class="field"><span>الصنف</span><select id="c2"><option>أقماع تدريب</option><option>كرات سلة</option><option>ألوان خشبية</option><option>مكعبات بناء</option></select></div><div class="field"><span>العدد</span><input id="c3" value="8" inputmode="numeric"></div><div class="field"><span>ملاحظات</span><input id="c4" value="للتمارين الصباحية"></div></div>
       <div class="webbtns"><button class="btn alt" data-act="a:additem">+ إضافة الصنف للطلب</button></div>
       <div class="tblw"><table class="t"><thead><tr><th>التصنيف</th><th>الصنف</th><th>العدد</th><th>ملاحظات</th><th></th></tr></thead><tbody>${A.rows.map((r,i)=>`<tr><td>${r.cat}</td><td>${r.item}</td><td>${ar(r.qty)}</td><td>${r.note||'—'}</td><td><button class="linkb" data-delrow="${i}">حذف</button></td></tr>`).join('')}</tbody></table></div>
       <div class="webbtns"><button class="btn" data-act="a:reqsend" ${A.rows.length?'':'disabled'}>إرسال الطلب</button></div>`)
-    :(A.reqSent?`<div class="card"><div class="row"><h4>طلبات غير متوفرة في المستودع</h4><span class="pill p-no">${ar(miss.length)}</span></div><p class="muted" style="margin:0">${miss.length?miss.map(r=>r.item+': المطلوب '+ar(r.qty)+'، والمتوفر '+ar(av(r))).join(' · ')+'. ينصرف المتوفر، والناقص يظهر لمدير الفرع «غير متوفر» عشان يشتريه.':'كل الأصناف متوفرة.'}</p></div>
+    :curTbl+(A.reqSent?`<div class="card"><div class="row"><h4>طلبات غير متوفرة في المستودع</h4><span class="pill p-no">${ar(miss.length)}</span></div><p class="muted" style="margin:0">${miss.length?miss.map(r=>r.item+': المطلوب '+ar(r.qty)+'، والمتوفر '+ar(av(r))).join(' · ')+'. ينصرف المتوفر، والناقص يظهر لمدير الفرع «غير متوفر» عشان يشتريه.':'كل الأصناف متوفرة.'}</p></div>
       <div class="tblw"><table class="t"><thead><tr><th>الصنف</th><th>المطلوب</th><th>ملاحظات</th><th>المتوفر</th><th>الحالة</th></tr></thead><tbody>${A.rows.map(r=>`<tr class="${av(r)<r.qty?'bad':''}"><td>${r.item}</td><td>${ar(r.qty)}</td><td>${r.note||'—'}</td><td>${ar(av(r))}</td><td>${av(r)<r.qty?`<span class="pill p-no">غير متوفر ${ar(r.qty-av(r))}</span>`:'<span class="pill p-ok">متوفر</span>'}</td></tr>`).join('')}</tbody></table></div>
       ${A.issued?`<div class="card"><div class="row"><h4>سند التسليم SND-0142</h4><span class="pill p-ok">صدر</span></div><p class="muted" style="margin:0">${A.ack?'أقرّ مدير الفرع بالاستلام، والعهد الآن في ذمته.':'بدّل إلى «مدير الفرع» ليقرّ بالاستلام.'}</p></div>`:`<div class="webbtns"><button class="btn" data-act="a:issue">إصدار سند التسليم بالمتوفر</button></div>`}`
       :`<div class="card"><h4>لا توجد طلبات جديدة</h4><p class="muted" style="margin:0">بدّل إلى «مدير الفرع» وأرسل طلباً أولاً.</p></div>`)}`;
