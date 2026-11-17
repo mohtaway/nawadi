@@ -977,15 +977,15 @@ function adminScreen(){
     ${body}`;
   }
   if(A.sec==='br'){
-    const B=[['النرجس','الرياض',5,0,96],['الياسمين','الرياض',8,0,131],['الواحة','جدة',4,0,58],['الربيع','الدمام',6,0,77],['الندى','الرياض',3,0,42]];
+    const B=[['النرجس','الرياض',5,0,96,7],['الياسمين','الرياض',8,0,131,12],['الواحة','جدة',4,0,58,4],['الربيع','الدمام',6,0,77,9],['الندى','الرياض',3,0,42,3]];
     const sum=k=>B.reduce((a,b)=>a+b[k],0);
     const ic=(c,t)=>`<button class="dim" data-act="a:noop" title="${t}" style="display:inline-block;width:22px;height:22px;border-radius:6px;border:0;background:${c};margin-inline-end:3px;padding:0"></button>`;
     html=`<h2>الفروع</h2>
     <div class="card"><div class="row"><h4>تعديل عدد الطلاب في صفحة الفروع</h4><span class="pill p-info">تعديل</span></div>
-      <p class="muted" style="margin:0 0 10px">عمود «الطلاب» اليوم يحسب اللي حالتهم «نشط» فقط، فينقص العدد بعد ما تنتهي الاشتراكات. أضفنا بجانبه عمود «طلاب السنة» يعرض عدد طلاب الفرع خلال السنة، ونضبط طريقة العد معكم. باقي الصفحة مثل ما هي عندكم.</p>
-      <div class="tblw"><table class="t" style="min-width:860px"><thead><tr><th>☐</th><th>#</th><th>اسم الفرع</th><th>المدينة</th><th>الجنس</th><th>الضريبة</th><th>المجموعات</th><th>الطلاب<br><small style="font-weight:400">الحالة الآن: نشط</small></th><th>طلاب السنة 2026 <span class="pill p-info">تصحيح</span></th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>
-      ${B.map((b,i)=>`<tr><td>☐</td><td>${ar(i+1)}</td><td>${b[0]}</td><td>${b[1]}</td><td>الكل</td><td>15%</td><td>${ar(b[2])}</td><td>${ar(b[3])}</td><td><b>${ar(b[4])}</b></td><td><span class="pill p-ok">نشط</span></td><td style="white-space:nowrap">${ic('#F0A91E','تعديل')}${ic('#22A6A1','الجداول')}${ic('#DDE6EE','التقرير')}${ic('#D9304C','حذف')}</td></tr>`).join('')}
-      <tr><td></td><td></td><td><b>مجموع الفروع المعروضة</b></td><td></td><td></td><td></td><td>${ar(sum(2))}</td><td>${ar(sum(3))}</td><td><b>${ar(sum(4))}</b></td><td></td><td></td></tr></tbody></table></div></div>
+      <p class="muted" style="margin:0 0 10px">عمود «الطلاب» اليوم يحسب اللي حالتهم «نشط» فقط، فينقص العدد بعد ما تنتهي الاشتراكات. أضفنا بجانبه عمودين: «طلاب السنة» وفيه كل من سجل في الفرع خلال السنة سواء انسحب أو لا، و«المنسحبون» وفيه عدد اللي انسحبوا منهم. باقي الصفحة مثل ما هي عندكم.</p>
+      <div class="tblw"><table class="t" style="min-width:960px"><thead><tr><th>☐</th><th>#</th><th>اسم الفرع</th><th>المدينة</th><th>الجنس</th><th>الضريبة</th><th>المجموعات</th><th>الطلاب<br><small style="font-weight:400">الحالة الآن: نشط</small></th><th>طلاب السنة 2026 <span class="pill p-info">تصحيح</span><br><small style="font-weight:400">كل المسجلين</small></th><th>المنسحبون 2026 <span class="pill p-info">تصحيح</span></th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>
+      ${B.map((b,i)=>`<tr><td>☐</td><td>${ar(i+1)}</td><td>${b[0]}</td><td>${b[1]}</td><td>الكل</td><td>15%</td><td>${ar(b[2])}</td><td>${ar(b[3])}</td><td><b>${ar(b[4])}</b></td><td>${ar(b[5])}</td><td><span class="pill p-ok">نشط</span></td><td style="white-space:nowrap">${ic('#F0A91E','تعديل')}${ic('#22A6A1','الجداول')}${ic('#DDE6EE','التقرير')}${ic('#D9304C','حذف')}</td></tr>`).join('')}
+      <tr><td></td><td></td><td><b>مجموع الفروع المعروضة</b></td><td></td><td></td><td></td><td>${ar(sum(2))}</td><td>${ar(sum(3))}</td><td><b>${ar(sum(4))}</b></td><td>${ar(sum(5))}</td><td></td><td></td></tr></tbody></table></div></div>
     <p class="muted" style="margin:0">الأسماء والأرقام هنا أمثلة للتوضيح. انتهاء الاشتراك يغير حالة الطالب فقط، وما يحذفه.</p>`;
   }
   if(A.sec==='prog'){
