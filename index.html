@@ -418,7 +418,7 @@ table.t tr.bad td{background:#FFF4F6}
 .deskin .rs-links{display:flex}
 .deskin .rs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .deskin .rs-pick{grid-template-columns:1fr 1fr 1fr}
-.deskin .side{flex-direction:column;overflow:visible;border-left:1px solid var(--line);border-bottom:0}
+.deskin .side{flex-direction:column;overflow-x:hidden;overflow-y:auto;max-height:900px;border-left:1px solid var(--line);border-bottom:0}
 .deskin .side img{display:block}
 .deskin .side .sg{display:block}
 .deskin .side button.dim{display:flex}
@@ -897,13 +897,13 @@ const NAV=[
  ['الموظفون والتواصل',[['أسرة نوادي',['الموظفون',['ini','المبادرات','تعديل'],'تقرير المبادرات','جوائز تميز الفروع','إدخال معطيات التميز','المقترحات','إسناد المهام']],['التوظيف والتواصل',['طلبات التوظيف','ترشحات للتوظيف','أرشيف الطلبات','قوالب العقود','عقود الموظفين','ملاحظات التوظيف','التخصصات الوظيفية','المسميات الوظيفية','الجنسيات','المدن','رسائل التواصل','قائمة الانتظار','الإشعارات']]]],
  ['خدمات إضافية',[['الرحلات',['قائمة الرحلات','إضافة رحلة']],['المقصف',['منتجات المقصف','أقسام المقصف','طلبات المقصف','التقرير اليومي','فتح/إغلاق جميع المقاصف']]]],
  ['الموقع والمحتوى',[['البوابة الإعلامية',['البنر الرئيسي','الرؤية والرسالة','قسم من نحن','صفحة حول نوادي','صور الدائرة','البرامج','إحصائيات الصفحة الرئيسية','الأخبار','الصور','الفيديوهات','آراء العملاء','الشركاء','التواصل الاجتماعي']]]],
- ['العهد والمستودع',[['عهدي',null],['العهد والمستودع',['جرد المستودع','سندات التسليم','متابعة الفروع',['req','طلب العهد','جديد'],['buy','المشتريات','جديد'],['clr','إخلاء طرف','تعديل'],'إعدادات العهد','تشغيل النظام وإيقافه']]]],
+ ['العهد والمستودع',[['عهدي',null,'mine'],['العهد والمستودع',['جرد المستودع','سندات التسليم','متابعة الفروع',['req','طلب العهد','جديد'],['buy','المشتريات','جديد'],['clr','إخلاء طرف','تعديل'],'إعدادات العهد','تشغيل النظام وإيقافه']]]],
  ['المسابقات',[['المسابقات',['قائمة المسابقات','إضافة مسابقة جديدة']]]],
  ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات',['ys','ملخص السنة',''],'الشروط والسياسات','ملاحظات التسجيل','تفعيل/تعطيل التسجيل','حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
 ];
 function navTree(A){
   const leaf=x=>Array.isArray(x)?`<button data-sec="${x[0]}" class="sub ${A.sec===x[0]?'on':''}">${x[1]}${x[2]?`<i class="nw">${x[2]}</i>`:''}</button>`:`<button class="dim sub" data-act="a:noop">${x}</button>`;
-  return NAV.map(g=>`<span class="sg">${g[0]}</span>`+g[1].map(it=>it[1]?`<button class="dim par" data-nav="${it[0]}">${it[0]}<span class="car">${A.navOpen[it[0]]?'▾':'‹'}</span></button>${A.navOpen[it[0]]?it[1].map(leaf).join(''):''}`:`<button class="dim" data-act="a:noop">${it[0]}</button>`).join('')).join('');
+  return NAV.map(g=>`<span class="sg">${g[0]}</span>`+g[1].map(it=>it[1]?`<button class="dim par" data-nav="${it[0]}">${it[0]}<span class="car">${A.navOpen[it[0]]?'▾':'‹'}</span></button>${A.navOpen[it[0]]?it[1].map(leaf).join(''):''}`:it[2]?`<button data-sec="${it[2]}" class="${A.sec===it[2]?'on':''}">${it[2]==='mine'&&A.who!=='mgr'?'عهدة مدير الفرع':it[0]}</button>`:`<button class="dim" data-act="a:noop">${it[0]}</button>`).join('')).join('');
 }
 function adminScreen(){
   const A=S.a, mgr=A.who==='mgr';
@@ -920,7 +920,7 @@ function adminScreen(){
           <div class="tblw"><table class="t"><thead><tr><th>الصنف</th><th>المطلوب</th><th>المصروف لك</th><th>الحالة</th></tr></thead><tbody>${A.rows.map(r=>`<tr class="${av(r)<r.qty?'bad':''}"><td>${r.item}</td><td>${ar(r.qty)}</td><td>${ar(av(r))}</td><td>${av(r)<r.qty?`<span class="pill p-no">غير متوفر ${ar(r.qty-av(r))}</span>`:'<span class="pill p-ok">مصروف</span>'}</td></tr>`).join('')}</tbody></table></div>
           <label class="chk ${A.pledge?'on':''}"><input type="checkbox" id="pledge" ${A.pledge?'checked':''}> أتعهد بالمحافظة على العهدة وإعادتها نهاية الفترة</label>
           <div class="webbtns"><button class="btn" data-act="a:ack" ${A.pledge?'':'disabled'}>أقرّ بالاستلام</button><button class="linkb" data-act="a:report">الإبلاغ عن خطأ في السند</button></div>`
-        :A.ack?`<p class="muted" style="margin:0 0 6px">أقررت بالاستلام. هذي العهد اللي راحت لك، وتظهر في «عهدي»:</p>
+        :A.ack?`<p class="muted" style="margin:0 0 6px">أقررت بالاستلام. هذي العهد اللي راحت لك، وتظهر في «عهدي»: <button class="linkb" data-sec="mine">فتح عهدي</button></p>
           <div class="tblw" style="margin-bottom:10px"><table class="t"><thead><tr><th>الصنف</th><th>العدد المستلم</th></tr></thead><tbody>${A.rows.filter(r=>av(r)>0).map(r=>`<tr><td>${r.item}</td><td>${ar(av(r))}</td></tr>`).join('')}</tbody></table></div>
           ${miss.length?`<div class="card" style="border-color:#F3C1CC"><div class="row"><h4>غير متوفر في المستودع</h4><span class="pill p-no">غير متوفر</span></div><p class="muted" style="margin:0 0 10px">${miss.map(r=>r.item+': '+ar(r.qty-av(r))).join('، ')}. إذا احتجته تقدر تشتريه للفرع، وتسجله في المشتريات عشان يدخل عهدة على فرعك.</p><div class="webbtns"><button class="btn" data-sec="buy">تسجيل الشراء</button></div></div>`:''}`
         :'<p class="muted" style="margin:0">بدّل إلى «مسؤول العهد» أعلى اللوحة لتشوف الطلب من جهته.</p>'}</div>`:`
@@ -930,7 +930,7 @@ function adminScreen(){
       <div class="webbtns"><button class="btn" data-act="a:reqsend" ${A.rows.length?'':'disabled'}>إرسال الطلب</button></div>`)
     :(A.reqSent?`<div class="card"><div class="row"><h4>طلبات غير متوفرة في المستودع</h4><span class="pill p-no">${ar(miss.length)}</span></div><p class="muted" style="margin:0">${miss.length?miss.map(r=>r.item+': المطلوب '+ar(r.qty)+'، والمتوفر '+ar(av(r))).join(' · ')+'. ينصرف المتوفر، والناقص يظهر لمدير الفرع «غير متوفر» عشان يشتريه.':'كل الأصناف متوفرة.'}</p></div>
       <div class="tblw"><table class="t"><thead><tr><th>الصنف</th><th>المطلوب</th><th>ملاحظات</th><th>المتوفر</th><th>الحالة</th></tr></thead><tbody>${A.rows.map(r=>`<tr class="${av(r)<r.qty?'bad':''}"><td>${r.item}</td><td>${ar(r.qty)}</td><td>${r.note||'—'}</td><td>${ar(av(r))}</td><td>${av(r)<r.qty?`<span class="pill p-no">غير متوفر ${ar(r.qty-av(r))}</span>`:'<span class="pill p-ok">متوفر</span>'}</td></tr>`).join('')}</tbody></table></div>
-      ${A.issued?`<div class="card"><div class="row"><h4>سند التسليم والاستلام SND-0142</h4><span class="pill p-ok">صدر</span></div><p class="muted" style="margin:0">${A.ack?'أقرّ مدير الفرع بالاستلام، والعهد الآن في ذمته.':'بدّل إلى «مدير الفرع» ليقرّ بالاستلام.'}</p></div>`:`<div class="webbtns"><button class="btn" data-act="a:issue">إصدار سند التسليم بالمتوفر</button></div>`}`
+      ${A.issued?`<div class="card"><div class="row"><h4>سند التسليم والاستلام SND-0142</h4><span class="pill p-ok">صدر</span></div><p class="muted" style="margin:0">${A.ack?'أقرّ مدير الفرع بالاستلام، والعهد الآن في ذمته. <button class="linkb" data-sec="mine">عرض العهدة</button>':'بدّل إلى «مدير الفرع» ليقرّ بالاستلام.'}</p></div>`:`<div class="webbtns"><button class="btn" data-act="a:issue">إصدار سند التسليم بالمتوفر</button></div>`}`
       :`<div class="card"><h4>لا توجد طلبات جديدة</h4><p class="muted" style="margin:0">بدّل إلى «مدير الفرع» وأرسل طلباً أولاً.</p></div>`)}`;
   }
   if(A.sec==='buy'){
@@ -1032,8 +1032,17 @@ function adminScreen(){
     <div class="card log"><b style="color:var(--navy)">سجل التغيير</b>${A.log.map(l=>`<span>${l}</span>`).join('')}</div>
     <p class="muted" style="margin:0">جرّب: أغلقه ثم افتح تبويب «الموظف» ← المبادرات.</p>`;
   }
+  if(A.sec==='mine'){
+    const AV={'كرات سلة':7,'مكعبات بناء':5,'ألوان خشبية':20,'أقماع تدريب':0};
+    const got=A.rows.map(r=>({item:r.item,cat:r.cat,n:Math.min(r.qty,AV[r.item]??r.qty)})).filter(r=>r.n>0);
+    html=`<h2>${mgr?'عهدي':'عهدة مدير الفرع'}</h2>
+    ${A.ack?`<div class="card"><div class="row"><h4>${mgr?'الأصناف المستلمة من هذا الطلب':'الأصناف التي استلمها مدير الفرع من هذا الطلب'}</h4><span class="pill p-ok">مستلمة</span></div><p class="muted" style="margin:0">وصلت من طلب العهد بعد إقرار الاستلام على سند التسليم SND-0142.</p></div>
+      <div class="tblw"><table class="t"><thead><tr><th>التصنيف</th><th>الصنف</th><th>العدد</th><th>السند</th><th>الحالة</th></tr></thead><tbody>${got.map(r=>`<tr><td>${r.cat}</td><td>${r.item}</td><td>${ar(r.n)}</td><td>SND-0142</td><td><span class="pill p-ok">مستلم بالسند</span></td></tr>`).join('')}</tbody></table></div>`
+    :`<div class="card"><h4>ما فيه عهد مستلمة بعد</h4><p class="muted" style="margin:0 0 10px">العهدة تظهر هنا بعد ما تكتمل خطوات الطلب: ${A.reqSent?(A.issued?'باقي إقرار مدير الفرع بالاستلام.':'باقي مسؤول العهد يصدر سند التسليم.'):'مدير الفرع يرسل الطلب، مسؤول العهد يصدر السند، ثم مدير الفرع يقر بالاستلام.'}</p><div class="webbtns"><button class="btn" data-sec="req">فتح طلب العهد</button></div></div>`}
+    <p class="muted" style="margin:0">هذا العرض يوضح الأصناف المستلمة من طلب العهد بعد الإقرار. المشتريات وكشف نهاية الفترة في أقسامهما. الأصناف والأعداد أمثلة.</p>`;
+  }
   const sys=['ini','prog','br','ys'].includes(A.sec);
-  const titles={ys:'ملخص السنة',br:'الفروع',prog:'برامج الفرع',req:'طلب العهد',buy:'مشتريات الفرع',clr:'إخلاء طرف',ini:'المبادرات'};
+  const titles={mine:mgr?'عهدي':'عهدة مدير الفرع',ys:'ملخص السنة',br:'الفروع',prog:'برامج الفرع',req:'طلب العهد',buy:'مشتريات الفرع',clr:'إخلاء طرف',ini:'المبادرات'};
   const grp=(l,items)=>`<span class="sg">${l}</span>${items.map(x=>x[0]?`<button data-sec="${x[0]}" class="${A.sec===x[0]?'on':''}">${x[1]}<i class="nw">${x[2]||'جديد'}</i></button>`:`<button class="dim" data-act="a:noop">${x[1]}</button>`).join('')}`;
   const pc=S.view.admin!=='mob';
   return `${pc?'<div class="desk"><div class="deskin">':''}<div class="web${pc?'':' narrow'}"><div class="webbody">
@@ -1048,6 +1057,22 @@ function adminScreen(){
 /* ===== العرض ===== */
 function dev(key,opts){return `<div class="dev" role="group" aria-label="طريقة العرض">${opts.map(o=>`<button data-view="${o[0]}" class="${S.view[key]===o[0]?'on':''}">${o[1]}</button>`).join('')}</div></div>${(S.view[key]==='web'||S.view[key]==='pc')?'<p class="devhint">هذا شكل شاشة الكمبيوتر. كبّروها بإصبعين، أو افتحوا الرابط من الكمبيوتر لتجربة أوضح.</p>':''}`;}
 function render(){
+  const _sd=document.querySelector('.side'), _sy=_sd?_sd.scrollTop:null, _sx=_sd?_sd.scrollLeft:null;
+  try{_render();}finally{
+    const sd=document.querySelector('.side');
+    if(sd){
+      if(_sy!=null){sd.scrollTop=_sy;sd.scrollLeft=_sx;}
+      const ons=[...sd.querySelectorAll('button.on')], b=sd.getBoundingClientRect();
+      const seen=e=>{const r=e.getBoundingClientRect();return r.top>=b.top-2&&r.bottom<=b.bottom+2&&r.left>=b.left-2&&r.right<=b.right+2;};
+      if(ons.length&&!ons.some(seen)){
+        const r=ons[0].getBoundingClientRect(), k=(b.height/sd.offsetHeight)||1;
+        sd.scrollTop+=((r.top+r.height/2)-(b.top+b.height/2))/k;
+        sd.scrollLeft+=((r.left+r.width/2)-(b.left+b.width/2))/k;
+      }
+    }
+  }
+}
+function _render(){
   document.querySelectorAll('.roles button').forEach(b=>b.setAttribute('aria-selected',b.dataset.role===S.role));
   const st=$('#stage');
   st.className='stage'+((S.role==='admin'||(S.role==='parent'&&S.view.parent==='web'))?' wide':'');
@@ -1076,7 +1101,7 @@ document.addEventListener('click',e=>{
   if(d.nav){A.navOpen[d.nav]=!A.navOpen[d.nav];render();return;}
   if(d.who){A.who=d.who;render();return;}
   if(d.ysbr!==undefined){A.ysBr=+d.ysbr;render();return;}
-  if(d.sec){if(d.sec==='ys'&&d.ysall)A.ysBr=-1;A.sec=d.sec;render();return;}
+  if(d.sec){if(d.sec==='ys'&&d.ysall)A.ysBr=-1;A.sec=d.sec;const inSide=!!e.target.closest('.side');if(!inSide)NAV.forEach(g=>g[1].forEach(it=>{if(it[1]&&it[1].some(x=>Array.isArray(x)&&x[0]===d.sec)&&!(d.sec==='ys'&&it[0]==='النظام'))A.navOpen[it[0]]=true;}));render();return;}
   if(d.conf!==undefined){const r=A.clItems[+d.conf]; r.ret=r.given; A.reasons[+d.conf]='استُكمل وتأكد استلامه'; render(); webToast('تأكد استلام الاستكمال'); return;}
   if(d.delrow!==undefined){A.rows.splice(+d.delrow,1);render();return;}
   if(d.buyin!==undefined){if(A.clItems&&A.cl!=='ok'){ if(A.cl!=='check'){webToast('الكشف في مرحلة الجرد. يدخل هذا الشراء بعد حفظ الكشف');return;} const p=A.purch[+d.buyin]; p.st='in'; A.clItems.push({name:p.item,src:'مشتريات أثناء العمل',given:p.qty,ret:p.qty}); render(); webToast('دخل الشراء على الفرع، وانضاف للكشف المرسل للمدير'); return;}A.purch[+d.buyin].st='in';render();webToast('دخل الصنف على الفرع وحُفظ');return;}
