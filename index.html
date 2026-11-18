@@ -512,25 +512,25 @@ function toast(msg){
   clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'),2200);
 }
 const SKEY='nwsim-v31', A0=JSON.stringify(S.a);
-function saneA(a){const d=JSON.parse(A0), isO=x=>x&&typeof x==='object'&&!Array.isArray(x), str=x=>typeof x==='string', num=x=>Number.isFinite(x)&&x>0;
-  if(!isO(a))return d;
-  const arr=(k,ok)=>{if(Array.isArray(a[k]))d[k]=a[k].filter(ok);};
-  if(['req','mine','buy','clr','br','ys','prog','ini'].includes(a.sec))d.sec=a.sec;
-  if(['mgr','cust'].includes(a.who))d.who=a.who;
-  arr('rows',r=>isO(r)&&str(r.item)&&str(r.cat)&&num(r.qty));
-  arr('purch',r=>isO(r)&&str(r.item)&&num(r.qty)&&str(r.st));
-  arr('progs',r=>isO(r)&&str(r.n)&&typeof r.on==='boolean');
-  arr('log',str);
-  if(isO(a.navOpen))Object.keys(a.navOpen).forEach(k=>{if(typeof a.navOpen[k]==='boolean')d.navOpen[k]=a.navOpen[k];});
-  if(isO(a.reasons))d.reasons=a.reasons;
-  ['pledge','reqSent','issued','ack','sign','open','cy'].forEach(k=>{if(typeof a[k]==='boolean')d[k]=a[k];});
-  if(str(a.just))d.just=a.just;
-  if(Array.isArray(a.clItems)&&a.clItems.length&&a.clItems.every(r=>isO(r)&&str(r.name)&&str(r.src)&&Number.isFinite(r.given)&&Number.isFinite(r.ret))&&['check','count','back','ok','sent','sign'].includes(a.cl)){d.clItems=a.clItems;d.cl=a.cl;}
-  if(Number.isInteger(a.ysBr))d.ysBr=a.ysBr;
-  if(d.ack&&!d.rows.length){d.reqSent=d.issued=d.ack=false;}
-  return d;}
-let hadSaved=false;
-try{const j=JSON.parse(localStorage.getItem(SKEY)||'null'); if(j&&typeof j==='object'&&j.a){const f=saneA(j.a);Object.keys(S.a).forEach(x=>delete S.a[x]);Object.assign(S.a,f); if(['parent','student','emp','admin'].includes(j.role))S.role=j.role; if(j.view&&['app','web'].includes(j.view.parent))S.view.parent=j.view.parent; if(j.view&&['pc','mob'].includes(j.view.admin)){S.view.admin=j.view.admin;hadSaved=true;}}}catch(_){}
+/* الاسترجاع: الحالة المحفوظة تُقبل كاملة كما هي أو تُرفض كاملة. لا إصلاح جزئي حتى لا تنشأ حالة غير متسقة. */
+function shapeOk(a){const d=JSON.parse(A0), isO=x=>x&&typeof x==='object'&&!Array.isArray(x), kind=x=>x===null?'null':Array.isArray(x)?'arr':typeof x;
+  if(!isO(a))return false;
+  for(const k of Object.keys(d)){ if(!(k in a))return false; if(k==='clItems'){if(a[k]!==null&&!Array.isArray(a[k]))return false;continue;} if(kind(a[k])!==kind(d[k]))return false; }
+  if(!['req','mine','buy','clr','br','ys','prog','ini'].includes(a.sec)||!['mgr','cust'].includes(a.who))return false;
+  if(!['list','check','count','back','ok','sent','sign'].includes(a.cl))return false;
+  if((a.cl!=='list')!==(Array.isArray(a.clItems)&&a.clItems.length>0)&&a.cl!=='list')return false;
+  const str=x=>typeof x==='string', n0=x=>Number.isInteger(x)&&x>=0, opt=x=>x===undefined||str(x), f0=x=>Number.isFinite(x)&&x>=0;
+  if(!a.rows.every(r=>isO(r)&&str(r.item)&&str(r.cat)&&n0(r.qty)&&r.qty>0&&opt(r.note)))return false;
+  if(!a.purch.every(r=>isO(r)&&str(r.item)&&n0(r.qty)&&r.qty>0&&['wait','in'].includes(r.st)&&opt(r.cond)&&opt(r.place)&&opt(r.note)))return false;
+  if(!a.progs.every(r=>isO(r)&&str(r.n)&&typeof r.on==='boolean')||!a.log.every(str))return false;
+  if(!Object.values(a.navOpen).every(v=>typeof v==='boolean')||!Object.values(a.reasons).every(str))return false;
+  if(a.clItems&&!a.clItems.every(r=>isO(r)&&str(r.name)&&str(r.src)&&f0(r.given)&&f0(r.ret)&&(r.mg===undefined||f0(r.mg))))return false;
+  if(!['cy','hadShort'].every(k=>a[k]===undefined||typeof a[k]==='boolean')||![-1,0,1,2,3,4].includes(a.ysBr))return false;
+  if(a.ack&&!(a.issued&&a.reqSent&&a.rows.length))return false;
+  if(a.issued&&!a.reqSent)return false;
+  return true;}
+let hadSaved=false, restored=false;
+try{const j=JSON.parse(localStorage.getItem(SKEY)||'null'); if(j&&typeof j==='object'&&shapeOk(j.a)&&['parent','student','emp','admin'].includes(j.role)&&j.view&&['app','web'].includes(j.view.parent)&&['pc','mob'].includes(j.view.admin)){Object.keys(S.a).forEach(x=>delete S.a[x]);Object.assign(S.a,j.a);S.role=j.role;S.view.parent=j.view.parent;S.view.admin=j.view.admin;hadSaved=restored=true;}}catch(_){}
 if(!hadSaved&&window.innerWidth<760)S.view.admin='mob';
 let saveWarned=false;
 function saveS(){try{localStorage.setItem(SKEY,JSON.stringify({role:S.role,view:S.view,a:S.a}));}catch(_){if(!saveWarned&&S.role==='admin'){saveWarned=true;setTimeout(()=>webToast('هذا المتصفح ما يحفظ التجربة، وقد تبدأ من جديد بعد تحديث الصفحة'),600);}}}
@@ -1242,6 +1242,8 @@ document.addEventListener('change',e=>{
 document.addEventListener('input',e=>{
   if(e.target.id==='just'){S.a.just=e.target.value; return; const btn=document.querySelector('[data-act="a:clrsend"]'); if(btn) btn.disabled=!clrReady();}
 });
-try{render();}catch(_){try{localStorage.removeItem(SKEY);}catch(e){} const f=JSON.parse(A0);Object.keys(S.a).forEach(x=>delete S.a[x]);Object.assign(S.a,f);S.role='parent';render();}
+function freshA(){try{localStorage.removeItem(SKEY);}catch(e){} const f=JSON.parse(A0);Object.keys(S.a).forEach(k=>delete S.a[k]);Object.assign(S.a,f);S.role='parent';}
+if(restored){try{const keep=[S.a.sec,S.a.who];for(const sc of ['req','mine','buy','clr','br','ys','prog','ini'])for(const w of ['mgr','cust']){S.a.sec=sc;S.a.who=w;adminScreen();adminGuide();}S.a.sec=keep[0];S.a.who=keep[1];}catch(_){freshA();}}
+try{render();}catch(_){freshA();render();}
 })();
 </script>
