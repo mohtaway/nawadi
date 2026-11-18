@@ -512,15 +512,28 @@ function toast(msg){
   clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'),2200);
 }
 const SKEY='nwsim-v31', A0=JSON.stringify(S.a);
-function okSaved(j){const a=j&&j.a, isO=x=>x&&typeof x==='object'&&!Array.isArray(x);
-  return isO(a)&&['parent','student','emp','admin'].includes(j.role)&&['req','mine','buy','clr','br','ys','prog','ini'].includes(a.sec)&&['mgr','cust'].includes(a.who)
-    &&Array.isArray(a.rows)&&a.rows.every(r=>isO(r)&&typeof r.item==='string'&&typeof r.cat==='string'&&Number.isFinite(r.qty))
-    &&isO(a.navOpen)&&Array.isArray(a.progs)&&Array.isArray(a.purch)&&Array.isArray(a.log)&&isO(a.reasons)&&(a.clItems===null||Array.isArray(a.clItems))
-    &&(!j.view||(['app','web'].includes(j.view.parent)&&['pc','mob'].includes(j.view.admin)));}
+function saneA(a){const d=JSON.parse(A0), isO=x=>x&&typeof x==='object'&&!Array.isArray(x), str=x=>typeof x==='string', num=x=>Number.isFinite(x)&&x>0;
+  if(!isO(a))return d;
+  const arr=(k,ok)=>{if(Array.isArray(a[k]))d[k]=a[k].filter(ok);};
+  if(['req','mine','buy','clr','br','ys','prog','ini'].includes(a.sec))d.sec=a.sec;
+  if(['mgr','cust'].includes(a.who))d.who=a.who;
+  arr('rows',r=>isO(r)&&str(r.item)&&str(r.cat)&&num(r.qty));
+  arr('purch',r=>isO(r)&&str(r.item)&&num(r.qty)&&str(r.st));
+  arr('progs',r=>isO(r)&&str(r.n)&&typeof r.on==='boolean');
+  arr('log',str);
+  if(isO(a.navOpen))Object.keys(a.navOpen).forEach(k=>{if(typeof a.navOpen[k]==='boolean')d.navOpen[k]=a.navOpen[k];});
+  if(isO(a.reasons))d.reasons=a.reasons;
+  ['pledge','reqSent','issued','ack','sign','open','cy'].forEach(k=>{if(typeof a[k]==='boolean')d[k]=a[k];});
+  if(str(a.just))d.just=a.just;
+  if(Array.isArray(a.clItems)&&a.clItems.length&&a.clItems.every(r=>isO(r)&&str(r.name)&&str(r.src)&&Number.isFinite(r.given)&&Number.isFinite(r.ret))&&['check','count','back','ok','sent','sign'].includes(a.cl)){d.clItems=a.clItems;d.cl=a.cl;}
+  if(Number.isInteger(a.ysBr))d.ysBr=a.ysBr;
+  if(d.ack&&!d.rows.length){d.reqSent=d.issued=d.ack=false;}
+  return d;}
 let hadSaved=false;
-try{const j=JSON.parse(localStorage.getItem(SKEY)||'null'); if(okSaved(j)){Object.assign(S.a,j.a); S.role=j.role; if(j.view)Object.assign(S.view,j.view); hadSaved=true;}}catch(_){}
+try{const j=JSON.parse(localStorage.getItem(SKEY)||'null'); if(j&&typeof j==='object'&&j.a){const f=saneA(j.a);Object.keys(S.a).forEach(x=>delete S.a[x]);Object.assign(S.a,f); if(['parent','student','emp','admin'].includes(j.role))S.role=j.role; if(j.view&&['app','web'].includes(j.view.parent))S.view.parent=j.view.parent; if(j.view&&['pc','mob'].includes(j.view.admin)){S.view.admin=j.view.admin;hadSaved=true;}}}catch(_){}
 if(!hadSaved&&window.innerWidth<760)S.view.admin='mob';
-function saveS(){try{localStorage.setItem(SKEY,JSON.stringify({role:S.role,view:S.view,a:S.a}));}catch(_){}}
+let saveWarned=false;
+function saveS(){try{localStorage.setItem(SKEY,JSON.stringify({role:S.role,view:S.view,a:S.a}));}catch(_){if(!saveWarned&&S.role==='admin'){saveWarned=true;setTimeout(()=>webToast('هذا المتصفح ما يحفظ التجربة، وقد تبدأ من جديد بعد تحديث الصفحة'),600);}}}
 function webToast(msg){ const t=$('#webtoast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
 const IC={
  home:'<path d="M3 11.5 12 4l9 7.5V20h-6v-6H9v6H3z"/>',
@@ -1194,7 +1207,7 @@ document.addEventListener('click',e=>{
   }
   if(k==='a'){
     if(a==='cy'){A.cy=!A.cy;render();return;}
-    if(a==='reset'){const f=JSON.parse(A0);Object.keys(A).forEach(x=>delete A[x]);Object.assign(A,f);render();webToast('رجعت التجربة من أولها');return;}
+    if(a==='reset'){if(!confirm('تبدؤون تجربة اللوحة من البداية؟ بينمسح تقدم اللوحة الحالي.'))return;const f=JSON.parse(A0);Object.keys(A).forEach(x=>delete A[x]);Object.assign(A,f);render();webToast('رجعت التجربة من أولها');return;}
     if(a==='noop'){webToast('هذي الصفحة موجودة في لوحتكم اليوم وتبقى كما هي، وهنا للعرض فقط');return;}
     if(a==='reqsend'){A.reqSent=true;render();webToast('أُرسل الطلب لمسؤول العهد');return;}
     if(a==='ack'){A.ack=true;render();webToast('تم الإقرار بالاستلام');return;}
