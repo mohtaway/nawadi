@@ -31,6 +31,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 /* شريط الجهات */
 .roles{display:flex;gap:8px;margin:18px 0 16px;overflow-x:auto;padding-bottom:4px}
 .roles button{flex:0 0 auto;border:1.5px solid var(--line);background:var(--surface);color:var(--navy);border-radius:14px;padding:10px 16px;font-weight:700;font-size:15px;display:flex;flex-direction:column;align-items:flex-start;line-height:1.3}
+.roles{flex-wrap:wrap}
+@media (max-width:760px){.roles{overflow:visible}.roles button{flex:1 1 calc(50% - 8px)}}
 .roles button small{font-weight:600;color:var(--muted);font-size:12px}
 .roles button[aria-selected="true"]{border-color:var(--teal);background:linear-gradient(135deg,var(--teal),#3a8fb7 60%,var(--purple));color:#fff}
 .roles button[aria-selected="true"] small{color:#E9FBFA}
@@ -426,6 +428,26 @@ table.t tr.bad td{background:#FFF4F6}
 .deskin .cycle{grid-template-columns:repeat(3,minmax(0,1fr))}
 .stage.wide .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px}
 .stage.wide .steps h3,.stage.wide .steps .hint{grid-column:1/-1}
+.side button.par.has{color:var(--navy);font-weight:800;box-shadow:inset -4px 0 0 var(--teal)}
+.cyt{align-self:flex-start;border:1.5px solid var(--line);background:#fff;color:var(--navy);border-radius:10px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700}
+.aguide{grid-column:1/-1;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.aguide .agh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.aguide h3{margin:0;font-size:15.5px;color:var(--navy)}
+.aguide .agh p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.aguide .agr{border:1.5px solid var(--line);background:#fff;color:var(--navy);border-radius:10px;padding:6px 12px;font:inherit;font-size:13px;font-weight:700}
+.aguide .agg{display:grid;grid-template-columns:1.5fr 1.2fr .8fr;gap:10px}
+@media (max-width:820px){.aguide .agg{grid-template-columns:minmax(0,1fr)}}
+.aguide .agc{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.aguide .agc.cur{border-color:var(--teal);background:var(--tint)}
+.aguide .agc b{font-size:14px;color:var(--navy)}
+.aguide .agc small{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin-top:1px}
+.aguide .agb{display:flex;gap:6px;flex-wrap:wrap}
+.aguide .agb button{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fff;color:var(--navy);border-radius:99px;padding:5px 12px 5px 12px;font:inherit;font-size:13px;font-weight:700}
+.aguide .agb button .n{width:18px;height:18px;border-radius:50%;background:var(--soft);color:var(--muted);display:grid;place-items:center;font-size:11px;font-weight:800}
+.aguide .agb button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.aguide .agb button.on .n{background:var(--teal);color:#fff}
+.aguide .agf{margin:0;font-size:13px;color:var(--muted)}
+.aguide .agf b{color:var(--teal-d)}
 .devhint{display:none;grid-column:1/-1;margin:0;font-size:13px;color:var(--muted)}
 @media (max-width:700px){.devhint{display:block}}
 </style>
@@ -446,7 +468,7 @@ table.t tr.bad td{background:#FFF4F6}
     <button role="tab" data-role="parent" aria-selected="true">ولي الأمر<small>التطبيق والموقع</small></button>
     <button role="tab" data-role="student" aria-selected="false">الطالب<small>المسابقات في التطبيق</small></button>
     <button role="tab" data-role="emp" aria-selected="false">الموظف<small>التطبيق</small></button>
-    <button role="tab" data-role="admin" aria-selected="false">لوحة الموقع<small>العهد والمشتريات والمبادرات</small></button>
+    <button role="tab" data-role="admin" aria-selected="false">لوحة الموقع<small>العهد والفروع والمبادرات</small></button>
   </nav>
 
   <main id="stage" class="stage"></main>
@@ -477,7 +499,7 @@ const S = {
   p:{step:'home', kids:[{name:'سارة',on:true,w:[0,2]},{name:'عبدالله',on:false,w:[0,1],own:[3]}], kid:0, code:'', codeState:'', pending:false, paid:false, sheet:false},
   s:{step:'list', a:null, ord:[], t:0, redeemed:false, csheet:false},
   e:{step:'home', att:{}, calls:[true,true,true,true,false], gone:[], sheet:false, done:false},
-  a:{who:'mgr', sec:'req', rows:[{cat:'أدوات رياضية',item:'كرات سلة',qty:10,note:'مقاس 7 للكبار'},{cat:'قرطاسية',item:'ألوان خشبية',qty:20,note:''},{cat:'ألعاب',item:'مكعبات بناء',qty:5,note:''}], pledge:false, navOpen:{'إدارة النادي':true,'أسرة نوادي':true,'العهد والمستودع':true,'النظام':true}, ysBr:-1, progs:[{n:'سباحة',on:true},{n:'كرة قدم',on:true},{n:'رسم وأشغال يدوية',on:true},{n:'رحلة أسبوعية',on:true},{n:'فروسية',on:false},{n:'برنامج القراءة',on:false}], cl:'list', clItems:null, reqSent:false, issued:false, ack:false, purch:[{item:'كرات قدم',qty:6,cond:'جديدة',place:'متجر رياضي — الفرع',note:'للنشاط الرياضي',st:'wait'}], just:'', reasons:{}, sign:false, open:true, log:['تم الفتح — مسؤول النظام — 1 يونيو']}
+  a:{who:'mgr', sec:'req', rows:[{cat:'أدوات رياضية',item:'كرات سلة',qty:10,note:'مقاس 7 للكبار'},{cat:'قرطاسية',item:'ألوان خشبية',qty:20,note:''},{cat:'ألعاب',item:'مكعبات بناء',qty:5,note:''}], pledge:false, navOpen:{'إدارة النادي':true,'أسرة نوادي':true,'العهد والمستودع':true}, ysBr:-1, progs:[{n:'سباحة',on:true},{n:'كرة قدم',on:true},{n:'رسم وأشغال يدوية',on:true},{n:'رحلة أسبوعية',on:true},{n:'فروسية',on:false},{n:'برنامج القراءة',on:false}], cl:'list', clItems:null, reqSent:false, issued:false, ack:false, purch:[{item:'كرات قدم',qty:6,cond:'جديدة',place:'متجر رياضي — الفرع',note:'للنشاط الرياضي',st:'wait'}], just:'', reasons:{}, sign:false, open:true, log:['تم الفتح — مسؤول النظام — 1 يونيو']}
 };
 
 /* ===== أدوات ===== */
@@ -489,6 +511,16 @@ function toast(msg){
   t.textContent = msg; t.classList.add('show');
   clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'),2200);
 }
+const SKEY='nwsim-v31', A0=JSON.stringify(S.a);
+function okSaved(j){const a=j&&j.a, isO=x=>x&&typeof x==='object'&&!Array.isArray(x);
+  return isO(a)&&['parent','student','emp','admin'].includes(j.role)&&['req','mine','buy','clr','br','ys','prog','ini'].includes(a.sec)&&['mgr','cust'].includes(a.who)
+    &&Array.isArray(a.rows)&&a.rows.every(r=>isO(r)&&typeof r.item==='string'&&typeof r.cat==='string'&&Number.isFinite(r.qty))
+    &&isO(a.navOpen)&&Array.isArray(a.progs)&&Array.isArray(a.purch)&&Array.isArray(a.log)&&isO(a.reasons)&&(a.clItems===null||Array.isArray(a.clItems))
+    &&(!j.view||(['app','web'].includes(j.view.parent)&&['pc','mob'].includes(j.view.admin)));}
+let hadSaved=false;
+try{const j=JSON.parse(localStorage.getItem(SKEY)||'null'); if(okSaved(j)){Object.assign(S.a,j.a); S.role=j.role; if(j.view)Object.assign(S.view,j.view); hadSaved=true;}}catch(_){}
+if(!hadSaved&&window.innerWidth<760)S.view.admin='mob';
+function saveS(){try{localStorage.setItem(SKEY,JSON.stringify({role:S.role,view:S.view,a:S.a}));}catch(_){}}
 function webToast(msg){ const t=$('#webtoast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200); }
 const IC={
  home:'<path d="M3 11.5 12 4l9 7.5V20h-6v-6H9v6H3z"/>',
@@ -899,11 +931,11 @@ const NAV=[
  ['الموقع والمحتوى',[['البوابة الإعلامية',['البنر الرئيسي','الرؤية والرسالة','قسم من نحن','صفحة حول نوادي','صور الدائرة','البرامج','إحصائيات الصفحة الرئيسية','الأخبار','الصور','الفيديوهات','آراء العملاء','الشركاء','التواصل الاجتماعي']]]],
  ['العهد والمستودع',[['عهدي',null,'mine'],['العهد والمستودع',['جرد المستودع','سندات التسليم','متابعة الفروع',['req','طلب العهد','جديد'],['buy','المشتريات','جديد'],['clr','إخلاء طرف','تعديل'],'إعدادات العهد','تشغيل النظام وإيقافه']]]],
  ['المسابقات',[['المسابقات',['قائمة المسابقات','إضافة مسابقة جديدة']]]],
- ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات',['ys','ملخص السنة',''],'الشروط والسياسات','ملاحظات التسجيل','تفعيل/تعطيل التسجيل','حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
+ ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات','الشروط والسياسات','ملاحظات التسجيل','تفعيل/تعطيل التسجيل','حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
 ];
 function navTree(A){
   const leaf=x=>Array.isArray(x)?`<button data-sec="${x[0]}" class="sub ${A.sec===x[0]?'on':''}">${x[1]}${x[2]?`<i class="nw">${x[2]}</i>`:''}</button>`:`<button class="dim sub" data-act="a:noop">${x}</button>`;
-  return NAV.map(g=>`<span class="sg">${g[0]}</span>`+g[1].map(it=>it[1]?`<button class="dim par" data-nav="${it[0]}">${it[0]}<span class="car">${A.navOpen[it[0]]?'▾':'‹'}</span></button>${A.navOpen[it[0]]?it[1].map(leaf).join(''):''}`:it[2]?`<button data-sec="${it[2]}" class="${A.sec===it[2]?'on':''}">${it[2]==='mine'&&A.who!=='mgr'?'عهدة مدير الفرع':it[0]}</button>`:`<button class="dim" data-act="a:noop">${it[0]}</button>`).join('')).join('');
+  return NAV.map(g=>`<span class="sg">${g[0]}</span>`+g[1].map(it=>it[1]?`<button class="dim par${!A.navOpen[it[0]]&&it[1].some(x=>Array.isArray(x)&&x[0]===A.sec)?' has':''}" data-nav="${it[0]}">${it[0]}<span class="car">${A.navOpen[it[0]]?'▾':'‹'}</span></button>${A.navOpen[it[0]]?it[1].map(leaf).join(''):''}`:it[2]?`<button data-sec="${it[2]}" class="${A.sec===it[2]?'on':''}">${it[2]==='mine'&&A.who!=='mgr'?'عهدة مدير الفرع':it[0]}</button>`:`<button class="dim" data-act="a:noop">${it[0]}</button>`).join('')).join('');
 }
 function adminScreen(){
   const A=S.a, mgr=A.who==='mgr';
@@ -1050,18 +1082,35 @@ function adminScreen(){
       ${navTree(A)}</nav>
     <div class="wmain"><div class="webtop"><span>☰ &nbsp; الواجهة الرئيسية</span><span class="sp"></span>
       ${sys?'<span>مسؤول النظام</span>':`<div class="who" role="group" aria-label="الدور"><button data-who="mgr" class="${mgr?'on':''}">مدير الفرع</button><button data-who="cust" class="${mgr?'':'on'}">مسؤول العهد</button></div>`}</div>
-      <section class="main"><div class="crumb"><span>الرئيسية / ${A.sec==='ini'?'الموظفون والتواصل / أسرة نوادي':A.sec==='ys'?'الإدارة والتقارير / النظام':A.sec==='prog'||A.sec==='br'?'الإدارة الأساسية / إدارة النادي':'العهد والمستودع'} / ${titles[A.sec]}</span></div>${sys?'':cycle(A.sec)}${html}</section>
+      <section class="main"><div class="crumb"><span>الرئيسية / ${A.sec==='ini'?'الموظفون والتواصل / أسرة نوادي':A.sec==='prog'||A.sec==='br'||A.sec==='ys'?'الإدارة الأساسية / إدارة النادي':'العهد والمستودع'} / ${titles[A.sec]}</span></div>${sys?'':`<button class="cyt" data-act="a:cy">كيف تمشي دورة العهد؟ ${A.cy?'▴':'▾'}</button>${A.cy?cycle(A.sec):''}`}${html}</section>
       <div class="wfoot">© 2026 شركة نوادي الأجيال. جميع الحقوق محفوظة. نهتم بمن هم أهم.</div></div></div></div>${pc?'</div></div>':''}`;
 }
 
 /* ===== العرض ===== */
+const AG=[
+ ['العهد','ابدؤوا بطلب العهد وبدّلوا الدور داخله، وبعد الإقرار افتحوا عهدي','العهد والمستودع',[['req','طلب العهد'],['mine','عهدي'],['buy','المشتريات'],['clr','إخلاء طرف']],false],
+ ['الفروع وبرامجها وملخص السنة','أعداد الطلاب وبرامج كل فرع','إدارة النادي',[['br','الفروع'],['ys','ملخص السنة'],['prog','برامج الفرع']],false],
+ ['المبادرات','فتح الاستقبال وإغلاقه','أسرة نوادي',[['ini','المبادرات']],false]
+];
+function adminGuide(){
+  const A=S.a, g=AG.find(x=>x[3].some(i=>i[0]===A.sec)), it=g&&g[3].find(i=>i[0]===A.sec);
+  const nm=i=>i[0]==='mine'&&A.who!=='mgr'?'عهدة مدير الفرع':i[1];
+  return `<section class="aguide" aria-label="دليل اللوحة"><div class="agh"><div><h3>دليل اللوحة: وش تبون تجربون؟</h3><p>اضغطوا أي زر هنا وتنفتح صفحته في اللوحة تحت. هنا الصفحات المتاحة للتجربة، ومنها ملخص السنة للمراجعة.</p></div><button class="agr" data-act="a:reset">إعادة تجربة اللوحة من البداية</button></div>
+  <div class="agg">${AG.map((x,n)=>`<div class="agc ${x===g?'cur':''}"><div><b>${n+1}. ${x[0]}</b><small>${x[1]}</small></div><div class="agb">${x[3].map((i,k)=>`<button data-sec="${i[0]}" data-go="1" class="${A.sec===i[0]?'on':''}">${x[4]?`<span class="n">${k+1}</span>`:''}${nm(i)}</button>`).join('')}</div></div>`).join('')}</div>
+  <p class="agf">${g?`أنتم الآن في: <b>${g[0]} ← ${nm(it)}</b>، ومكانها في قائمة اللوحة تحت «${g[2]}». `:''}باقي بنود القائمة موجودة في لوحتكم اليوم وتبقى كما هي.</p></section>`;
+}
 function dev(key,opts){return `<div class="dev" role="group" aria-label="طريقة العرض">${opts.map(o=>`<button data-view="${o[0]}" class="${S.view[key]===o[0]?'on':''}">${o[1]}</button>`).join('')}</div></div>${(S.view[key]==='web'||S.view[key]==='pc')?'<p class="devhint">هذا شكل شاشة الكمبيوتر. كبّروها بإصبعين، أو افتحوا الرابط من الكمبيوتر لتجربة أوضح.</p>':''}`;}
 function render(){
   const _sd=document.querySelector('.side'), _sy=_sd?_sd.scrollTop:null, _sx=_sd?_sd.scrollLeft:null;
-  try{_render();}finally{
+  try{_render();saveS();}finally{
+    const sd=document.querySelector('.side');
+    if(sd&&_sy!=null){sd.scrollTop=_sy;sd.scrollLeft=_sx;}
+    sideSee();
+  }
+}
+function sideSee(){
     const sd=document.querySelector('.side');
     if(sd){
-      if(_sy!=null){sd.scrollTop=_sy;sd.scrollLeft=_sx;}
       const ons=[...sd.querySelectorAll('button.on')], b=sd.getBoundingClientRect();
       const seen=e=>{const r=e.getBoundingClientRect();return r.top>=b.top-2&&r.bottom<=b.bottom+2&&r.left>=b.left-2&&r.right<=b.right+2;};
       if(ons.length&&!ons.some(seen)){
@@ -1070,20 +1119,19 @@ function render(){
         sd.scrollLeft+=((r.left+r.width/2)-(b.left+b.width/2))/k;
       }
     }
-  }
 }
 function _render(){
   document.querySelectorAll('.roles button').forEach(b=>b.setAttribute('aria-selected',b.dataset.role===S.role));
   const st=$('#stage');
   st.className='stage'+((S.role==='admin'||(S.role==='parent'&&S.view.parent==='web'))?' wide':'');
-  if(S.role==='parent') st.innerHTML=dev('parent',[['app','التطبيق على الجوال'],['web','الموقع على الكمبيوتر']])+parentScreen()+steps('رحلة ولي الأمر','يختار الأسابيع اللي يبيها ويدفع مرة وحدة، من التطبيق أو الموقع.',P_STEPS,S.p.step==='done'?'pay':S.p.step==='resume'?'later':S.p.step,'p');
-  if(S.role==='student') st.innerHTML=studentScreen()+steps('رحلة الطالب','الطالب يدخل بحسابه ويشارك من التطبيق.',S_STEPS,S.s.step,'s');
-  if(S.role==='emp') st.innerHTML=empScreen()+steps('رحلة الموظف','ينجز شغله من التطبيق نفسه، بدون انتقال للموقع.',E_STEPS,S.e.step,'e');
-  if(S.role==='admin') st.innerHTML=dev('admin',[['pc','على الكمبيوتر'],['mob','على الجوال']])+adminScreen();
+  if(S.role==='parent') st.innerHTML=dev('parent',[['app','التطبيق على الجوال'],['web','الموقع على الكمبيوتر']])+parentScreen()+steps('اختصارات تجربة ولي الأمر','تقدرون تفتحون أي شاشة مباشرة. يختار الأسابيع اللي يبيها ويدفع مرة وحدة، من التطبيق أو الموقع.',P_STEPS,S.p.step==='done'?'pay':S.p.step==='resume'?'later':S.p.step,'p');
+  if(S.role==='student') st.innerHTML=studentScreen()+steps('اختصارات تجربة الطالب','تقدرون تفتحون أي شاشة مباشرة. الطالب يدخل بحسابه ويشارك من التطبيق.',S_STEPS,S.s.step,'s');
+  if(S.role==='emp') st.innerHTML=empScreen()+steps('اختصارات تجربة الموظف','تقدرون تفتحون أي شاشة مباشرة. ينجز شغله من التطبيق نفسه، بدون انتقال للموقع.',E_STEPS,S.e.step,'e');
+  if(S.role==='admin') st.innerHTML=dev('admin',[['pc','على الكمبيوتر'],['mob','على الجوال']])+adminGuide()+adminScreen();
   fit();
 }
 function fit(){document.querySelectorAll('.desk').forEach(d=>{const i=d.firstElementChild, k=Math.min(1,(d.clientWidth-20)/1240); i.style.transform='scale('+k+')'; d.style.height=(i.offsetHeight*k+20)+'px';});}
-window.addEventListener('resize',fit); window.addEventListener('load',fit); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+window.addEventListener('resize',fit); window.addEventListener('load',()=>{fit();sideSee();}); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{fit();sideSee();});
 
 document.addEventListener('click',e=>{
   const b=e.target.closest('button,[data-kid],[data-call]');
@@ -1101,7 +1149,7 @@ document.addEventListener('click',e=>{
   if(d.nav){A.navOpen[d.nav]=!A.navOpen[d.nav];render();return;}
   if(d.who){A.who=d.who;render();return;}
   if(d.ysbr!==undefined){A.ysBr=+d.ysbr;render();return;}
-  if(d.sec){if(d.sec==='ys'&&d.ysall)A.ysBr=-1;A.sec=d.sec;const inSide=!!e.target.closest('.side');if(!inSide)NAV.forEach(g=>g[1].forEach(it=>{if(it[1]&&it[1].some(x=>Array.isArray(x)&&x[0]===d.sec)&&!(d.sec==='ys'&&it[0]==='النظام'))A.navOpen[it[0]]=true;}));render();return;}
+  if(d.sec){if(d.sec==='ys'&&d.ysall)A.ysBr=-1;A.sec=d.sec;const inSide=!!e.target.closest('.side');if(!inSide)NAV.forEach(g=>g[1].forEach(it=>{if(it[1]&&it[1].some(x=>Array.isArray(x)&&x[0]===d.sec))A.navOpen[it[0]]=true;}));render();if(d.go){const m=document.querySelector('.web .wmain');if(m)m.scrollIntoView({behavior:'smooth',block:'start'});}return;}
   if(d.conf!==undefined){const r=A.clItems[+d.conf]; r.ret=r.given; A.reasons[+d.conf]='استُكمل وتأكد استلامه'; render(); webToast('تأكد استلام الاستكمال'); return;}
   if(d.delrow!==undefined){A.rows.splice(+d.delrow,1);render();return;}
   if(d.buyin!==undefined){if(A.clItems&&A.cl!=='ok'){ if(A.cl!=='check'){webToast('الكشف في مرحلة الجرد. يدخل هذا الشراء بعد حفظ الكشف');return;} const p=A.purch[+d.buyin]; p.st='in'; A.clItems.push({name:p.item,src:'مشتريات أثناء العمل',given:p.qty,ret:p.qty}); render(); webToast('دخل الشراء على الفرع، وانضاف للكشف المرسل للمدير'); return;}A.purch[+d.buyin].st='in';render();webToast('دخل الصنف على الفرع وحُفظ');return;}
@@ -1119,7 +1167,7 @@ document.addEventListener('click',e=>{
     if(a==='later'){P.pending=true;P.saved=P.kid;P.paid=false;P.step='later';render();return;}
     if(a==='resume'){if(P.saved!=null){P.kids.forEach((x,j)=>x.on=j===P.saved);P.kid=P.saved;} P.step='resume';render();return;}
     if(a==='done'){P.kids.forEach(x=>{if(x.on)x.paid=true;});P.paid=true;P.pending=false;P.step='done';render();return;}
-    if(a==='inv'){toast('تم تحميل الفاتورة PDF');return;}
+    if(a==='inv'){toast('زر توضيحي، المحاكاة ما تنزل ملف');return;}
     if(a==='share'){toast('اختر التطبيق للمشاركة');return;}
     if(a==='details')P.paid=true;
     P.shot=null; P.step=a; render(); return;
@@ -1130,8 +1178,8 @@ document.addEventListener('click',e=>{
     if(a==='unshot'){E.shot=null;render();return;}
     if(a==='noop'){toast('هذي الخدمة موجودة اليوم في التطبيق');return;}
     if(a==='save'){toast('تم حفظ الحضور');return;}
-    if(a==='pdf'){toast('تم تحميل كشف الحضور PDF');return;}
-    if(a==='dl'){toast('تم تحميل العقد PDF');return;}
+    if(a==='pdf'){toast('زر توضيحي، المحاكاة ما تنزل ملف');return;}
+    if(a==='dl'){toast('زر توضيحي، المحاكاة ما تنزل ملف');return;}
     if(a==='share'){toast('اختر التطبيق للمشاركة');return;}
     if(a==='all'){E.calls=E.calls.map((x,i)=>!E.gone.includes(i));render();return;}
     if(a==='confirm'){E.sheet=true;render();return;}
@@ -1145,7 +1193,9 @@ document.addEventListener('click',e=>{
     E.shot=null; E.step=a; render(); return;
   }
   if(k==='a'){
-    if(a==='noop'){webToast('هذي الصفحة موجودة في لوحتكم اليوم، وتبقى كما هي');return;}
+    if(a==='cy'){A.cy=!A.cy;render();return;}
+    if(a==='reset'){const f=JSON.parse(A0);Object.keys(A).forEach(x=>delete A[x]);Object.assign(A,f);render();webToast('رجعت التجربة من أولها');return;}
+    if(a==='noop'){webToast('هذي الصفحة موجودة في لوحتكم اليوم وتبقى كما هي، وهنا للعرض فقط');return;}
     if(a==='reqsend'){A.reqSent=true;render();webToast('أُرسل الطلب لمسؤول العهد');return;}
     if(a==='ack'){A.ack=true;render();webToast('تم الإقرار بالاستلام');return;}
     if(a==='issue'){A.issued=true;render();webToast('صدر سند التسليم بالأصناف المتوفرة');return;}
@@ -1179,6 +1229,6 @@ document.addEventListener('change',e=>{
 document.addEventListener('input',e=>{
   if(e.target.id==='just'){S.a.just=e.target.value; return; const btn=document.querySelector('[data-act="a:clrsend"]'); if(btn) btn.disabled=!clrReady();}
 });
-render();
+try{render();}catch(_){try{localStorage.removeItem(SKEY);}catch(e){} const f=JSON.parse(A0);Object.keys(S.a).forEach(x=>delete S.a[x]);Object.assign(S.a,f);S.role='parent';render();}
 })();
 </script>
