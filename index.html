@@ -475,7 +475,7 @@ table.t tr.bad td{background:#FFF4F6}
   </header>
 
   <section class="aguide" aria-label="ملاحظاتكم الست" style="margin-bottom:14px"><div class="agh"><div><h3>لتجربة ملاحظاتكم الست</h3><p>اضغطوا أي ملاحظة وتنفتح شاشتها مباشرة.</p></div></div>
-    <div class="agb"><button data-n6="1">1. إلغاء الدفع لاحقاً</button><button data-n6="2">2. الانتظار من التطبيق</button><button data-n6="3">3. تصحيح السند قبل الإقرار</button><button data-n6="4">4. السياسة والأحكام بعد الفرع</button><button data-n6="5">5. تذكرة الزوار في التطبيق</button><button data-n6="6">6. برنامج مقترح</button></div></section>
+    <div class="agb"><button data-n6="1">1. إلغاء الدفع لاحقاً</button><button data-n6="2">2. إغلاق التسجيل والانتظار</button><button data-n6="3">3. تصحيح السند قبل الإقرار</button><button data-n6="4">4. السياسة والأحكام بعد الفرع</button><button data-n6="5">5. تذكرة الزوار في التطبيق</button><button data-n6="6">6. برنامج مقترح</button></div></section>
 
   <nav class="roles" role="tablist" aria-label="الجهات">
     <button role="tab" data-role="parent" aria-selected="true">ولي الأمر<small>التطبيق والموقع</small></button>
@@ -512,7 +512,7 @@ const S = {
   p:{step:'home', kids:[{name:'سارة',on:true,w:[0,2]},{name:'عبدالله',on:false,w:[0,1],own:[3]}], kid:0, code:'', codeState:'', paid:false, sheet:false, agree:false, newName:'', viaLink:false, payW:-1},
   s:{step:'list', a:null, ord:[], t:0, redeemed:false, csheet:false},
   e:{step:'home', att:{}, calls:[true,true,true,true,false], gone:[], sheet:false, done:false, itype:'ini', pimg:0, pt:'', pi:'', editing:-1},
-  a:{who:'mgr', sec:'req', rows:[{cat:'أدوات رياضية',item:'كرات سلة',qty:10,note:'مقاس 7 للكبار'},{cat:'قرطاسية',item:'ألوان خشبية',qty:20,note:''},{cat:'ألعاب',item:'مكعبات بناء',qty:5,note:''}], pledge:false, navOpen:{'إدارة النادي':true,'أسرة نوادي':true,'العهد والمستودع':true}, ysBr:-1, progs:[{n:'سباحة',on:true},{n:'كرة قدم',on:true},{n:'رسم وأشغال يدوية',on:true},{n:'رحلة أسبوعية',on:true},{n:'فروسية',on:false},{n:'برنامج القراءة',on:false}], cl:'list', clItems:null, reqSent:false, issued:false, ack:false, purch:[{item:'كرات قدم',qty:6,cond:'جديدة',place:'متجر رياضي — الفرع',note:'للنشاط الرياضي',st:'wait'}], just:'', reasons:{}, sign:false, open:true, log:['تم الفتح — مسؤول النظام — 1 يونيو'], regMode:'open', wait:[{name:'لمى فهد',par:'أبو فهد',st:'new',wk:[0,1]},{name:'تركي ماجد',par:'أبو ماجد',st:'paid',wk:[0]}], props:[{t:'نادي الروبوت الصغير',idea:'برنامج أسبوعي يتعلم فيه الأطفال تركيب روبوت بسيط وتشغيله.',imgs:2,st:'mgr',note:''}], pwho:'mgr', sndVer:0, sndEdit:false, sndFixed:false, sndLog:[], disp:'', dispOpen:false}
+  a:{who:'mgr', sec:'req', rows:[{cat:'أدوات رياضية',item:'كرات سلة',qty:10,note:'مقاس 7 للكبار'},{cat:'قرطاسية',item:'ألوان خشبية',qty:20,note:''},{cat:'ألعاب',item:'مكعبات بناء',qty:5,note:''}], pledge:false, navOpen:{'إدارة النادي':true,'أسرة نوادي':true,'العهد والمستودع':true}, ysBr:-1, progs:[{n:'سباحة',on:true},{n:'كرة قدم',on:true},{n:'رسم وأشغال يدوية',on:true},{n:'رحلة أسبوعية',on:true},{n:'فروسية',on:false},{n:'برنامج القراءة',on:false}], cl:'list', clItems:null, reqSent:false, issued:false, ack:false, purch:[{item:'كرات قدم',qty:6,cond:'جديدة',place:'متجر رياضي — الفرع',note:'للنشاط الرياضي',st:'wait'}], just:'', reasons:{}, sign:false, open:true, log:['تم الفتح — مسؤول النظام — 1 يونيو'], regMode:'open', wait:[{name:'لمى فهد',par:'أبو فهد',st:'new',wk:[0,1]},{name:'تركي ماجد',par:'أبو ماجد',st:'paid',wk:[0]}], props:[{t:'نادي الروبوت الصغير',idea:'برنامج أسبوعي يتعلم فيه الأطفال تركيب روبوت بسيط وتشغيله.',imgs:2,st:'mgr',note:''}], pwho:'mgr', sndVer:0, sndEdit:false, sndFixed:false, sndLog:[], disp:'', dispOpen:false, clDirect:false}
 };
 
 /* ===== أدوات ===== */
@@ -526,13 +526,13 @@ function toast(msg){
 }
 const SECS=['req','mine','buy','clr','br','ys','prog','ini','wl','nr','pp'];
 const esc=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const SKEY='nwsim-v36', A0=JSON.stringify(S.a);
+const SKEY='nwsim-v38', A0=JSON.stringify(S.a);
 /* الاسترجاع: الحالة المحفوظة تُقبل كاملة كما هي أو تُرفض كاملة. لا إصلاح جزئي حتى لا تنشأ حالة غير متسقة. */
 function shapeOk(a){const d=JSON.parse(A0), isO=x=>x&&typeof x==='object'&&!Array.isArray(x), kind=x=>x===null?'null':Array.isArray(x)?'arr':typeof x;
   if(!isO(a))return false;
   try{if(/[<>`]/.test(JSON.stringify(a)))return false;}catch(_){return false;}
   for(const k of Object.keys(d)){ if(!(k in a))return false; if(k==='clItems'){if(a[k]!==null&&!Array.isArray(a[k]))return false;continue;} if(kind(a[k])!==kind(d[k]))return false; }
-  if(!SECS.includes(a.sec)||!['mgr','cust'].includes(a.who)||!['mgr','bud'].includes(a.pwho)||!['open','closed','wait'].includes(a.regMode))return false;
+  if(!SECS.includes(a.sec)||!['mgr','cust'].includes(a.who)||!['mgr','bud'].includes(a.pwho)||!['open','closed'].includes(a.regMode))return false;
   if(!['list','check','count','back','ok','sent','sign'].includes(a.cl))return false;
   if((a.cl!=='list')!==(Array.isArray(a.clItems)&&a.clItems.length>0)&&a.cl!=='list')return false;
   const str=x=>typeof x==='string', n0=x=>Number.isInteger(x)&&x>=0, opt=x=>x===undefined||str(x), f0=x=>Number.isFinite(x)&&x>=0;
@@ -550,6 +550,7 @@ function shapeOk(a){const d=JSON.parse(A0), isO=x=>x&&typeof x==='object'&&!Arra
   if((a.sndEdit||a.sndFixed)&&!a.issued)return false;
   if(a.sndEdit&&a.ack)return false;
   if((a.disp||a.dispOpen)&&(!a.issued||a.ack))return false;
+  if(a.clDirect&&(a.cl!=='ok'||a.sign||a.hadShort||!(a.clItems||[]).some(r=>r.ret<r.given)))return false;
   if(a.disp&&(a.dispOpen||a.disp.trim().length<10||a.disp.length>2000))return false;
   if(a.sndFixed!==a.rows.some(r=>r.fx!==undefined))return false;
   if(a.ack&&!(a.issued&&a.reqSent&&a.rows.length))return false;
@@ -658,9 +659,9 @@ function parentWeb(){
     <div class="rs-card rs-mid"><h5 class="rs-t">بيانات الابن</h5>
       <label class="rs-lbl">اسم الابن</label><div class="rs-code"><input id="rn" value="${esc(P.newName||'نورة أحمد')}"></div>
       <label class="rs-lbl">الفرع</label><div class="rs-code"><input value="فرع النرجس"></div>
-      ${rm==='closed'?'<div class="rs-alert" style="margin:12px 0"><div><b>التسجيل مغلق في هذا الفرع حالياً</b><span>تقدرون تختارون فرع ثاني، أو تتابعون إعلان فتح التسجيل.</span></div></div>':rm==='wait'?'<div class="rs-alert" style="margin:12px 0"><div><b>التسجيل في هذا الفرع مغلق مؤقتاً لاكتمال المقاعد</b><span>تقدرون تكمّلون البيانات بدون دفع وتدخلون قائمة الانتظار. في حال وجود شاغر يوصلكم رابط دفع لتفعيل الاشتراك.</span></div></div>':''}
+      ${rm==='closed'?'<div class="rs-alert" style="margin:12px 0"><div><b>التسجيل في هذا الفرع مغلق مؤقتا لاكتمال المقاعد</b><span>تقدرون تكمّلون البيانات بدون دفع وتدخلون قائمة الانتظار. في حال وجود شاغر يوصلكم رابط دفع لتفعيل الاشتراك.</span></div></div>':''}
       <p class="rs-note">بقية بيانات التسجيل الحالية كما هي. بعد اختيار الفرع تطلع السياسة والأحكام، وبعدها الأسابيع وكود الخصم.</p>
-      <button class="rs-gold w" data-act="p:toterms" ${rm==='closed'?'disabled':''}>التالي: السياسة والأحكام</button></div>`); }
+      <button class="rs-gold w" data-act="p:toterms">التالي: السياسة والأحكام</button></div>`); }
   case 'terms': return rsShell(`${rsHead('تسجيل ابن جديد','p:home')}${rsProg(1)}
     <div class="rs-card rs-mid"><h5 class="rs-t">السياسة والأحكام <span class="oldtag" style="background:#FFF3D1;color:#8A6400">مكانها الجديد</span></h5>
       <div class="tph">هنا يظهر نص السياسة والأحكام المعتمد عندكم اليوم كما هو، ونفسه لكل الفروع.<i></i><i style="width:86%"></i><i style="width:92%"></i><i style="width:60%"></i></div>
@@ -704,7 +705,7 @@ function parentWeb(){
       <button class="rs-gold w" data-act="p:details">عرض تفاصيل الاشتراك</button><button class="rs-out w" data-act="p:home">الرئيسية</button></div>`);
   case 'waitdone': return rsShell(`${rsHead('قائمة الانتظار','p:home')}
     <div class="rs-card rs-mid rs-center"><div class="rs-check">✓</div><h5 class="rs-t">سجلنا ابنكم في قائمة الانتظار</h5>
-      <p class="rs-note">التسجيل في هذا الفرع مغلق مؤقتاً وذلك لاكتمال المقاعد. في حال وجود شاغر سوف يتم إرسال رابط دفع لتفعيل الاشتراك.</p><p class="rs-note"><b>خلوكم قريبين</b></p>
+      <p class="rs-note">التسجيل في هذا الفرع مغلق مؤقتا وذلك لاكتمال المقاعد. في حال وجود شاغر سوف يتم إرسال رابط دفع لتفعيل الاشتراك.</p><p class="rs-note"><b>خلوكم قريبين</b></p>
       <button class="rs-gold w" data-act="p:home">الرجوع للوحتي</button>
       <p class="rs-note">جرّب: من «لوحة الموقع» ← قائمة المتدربين، أرسلوا رابط الدفع وارجعوا للوحة ولي الأمر.</p></div>`);
   case 'login': case 'visitor': return rsShell(`${rsHead('تذكرة الزوار','p:home')}
@@ -720,7 +721,7 @@ function parentWeb(){
       <div class="rs-actions"><button class="rs-out" data-act="p:inv">تحميل الفاتورة PDF</button><button class="rs-out" data-act="p:share">مشاركة</button></div></div>`); }
   }
 }
-const waitMode=()=>S.a.regMode==='wait'&&!S.p.viaLink&&!!(S.p.kids[S.p.kid]&&S.p.kids[S.p.kid].isNew);
+const waitMode=()=>S.a.regMode==='closed'&&!S.p.viaLink&&!!(S.p.kids[S.p.kid]&&S.p.kids[S.p.kid].isNew);
 const myWaitName=()=>{const w=S.a.wait.filter(x=>x.mine).pop();return w?w.name:'ابنكم';};
 function waitAlerts(web){
   const W=S.a.wait.filter(w=>w.mine);
@@ -782,9 +783,9 @@ function parentScreen(){
     <div class="card"><div class="field"><span>اسم الابن</span><input id="rn" value="${esc(P.newName||'نورة أحمد')}"></div>
     <div class="field" style="margin-top:8px"><span>الفرع</span><select><option>فرع النرجس</option></select></div>
     <div class="field" style="margin-top:8px"><span>تاريخ الميلاد</span><input value="2017-03-09"></div></div>
-    ${rm==='closed'?'<div class="card" style="border-color:var(--pink)"><div class="row"><h4>التسجيل مغلق في هذا الفرع حالياً</h4><span class="pill p-no">مغلق</span></div><p class="muted" style="margin:0">تقدر تختار فرع ثاني، أو تتابع إعلان فتح التسجيل.</p></div>':rm==='wait'?'<div class="card" style="border-color:var(--gold)"><div class="row"><h4>التسجيل مغلق مؤقتاً لاكتمال المقاعد</h4><span class="pill p-wait">قائمة الانتظار</span></div><p class="muted" style="margin:0">تقدر تكمّل البيانات بدون دفع وتدخل قائمة الانتظار. في حال وجود شاغر يوصلك رابط دفع لتفعيل الاشتراك.</p></div>':''}
+    ${rm==='closed'?'<div class="card" style="border-color:var(--gold)"><div class="row"><h4>التسجيل مغلق مؤقتا لاكتمال المقاعد</h4><span class="pill p-wait">قائمة الانتظار</span></div><p class="muted" style="margin:0">تقدر تكمّل البيانات بدون دفع وتدخل قائمة الانتظار. في حال وجود شاغر يوصلك رابط دفع لتفعيل الاشتراك.</p></div>':''}
     <p class="muted" style="margin:0">بقية بيانات التسجيل الحالية كما هي. بعد اختيار الفرع تطلع السياسة والأحكام، وبعدها الأسابيع وكود الخصم.</p>
-    <button class="btn" data-act="p:toterms" ${rm==='closed'?'disabled':''}>التالي: السياسة والأحكام</button>`); }
+    <button class="btn" data-act="p:toterms">التالي: السياسة والأحكام</button>`); }
   case 'terms': return phone('السياسة والأحكام','p:reg',`
     <div class="card"><div class="row"><h4>السياسة والأحكام</h4><span class="pill p-wait">مكانها الجديد</span></div>
       <div class="tph" style="margin-top:8px">هنا يظهر نص السياسة والأحكام المعتمد عندكم اليوم كما هو، ونفسه لكل الفروع.<i></i><i style="width:86%"></i><i style="width:92%"></i><i style="width:60%"></i></div></div>
@@ -792,7 +793,7 @@ function parentScreen(){
     <button class="btn" data-act="p:regnext" ${P.agree?'':'disabled'}>التالي: اختيار الأسابيع</button>
     <p class="muted" style="margin:0">الجديد مكانها: مباشرة بعد اختيار الفرع، وما ينتقل ولي الأمر لباقي الخطوات والدفع إلا بعد ما يوافق عليها.</p>`);
   case 'waitdone': return phone('قائمة الانتظار','p:home',`
-    <div class="card score"><div class="big" style="color:var(--gold-d)">✓</div><h4>سجلنا ابنكم في قائمة الانتظار</h4><p class="muted">التسجيل في هذا الفرع مغلق مؤقتاً وذلك لاكتمال المقاعد. في حال وجود شاغر سوف يتم إرسال رابط دفع لتفعيل الاشتراك.</p><p class="muted" style="margin:6px 0 0"><b>خلوكم قريبين</b></p></div>
+    <div class="card score"><div class="big" style="color:var(--gold-d)">✓</div><h4>سجلنا ابنكم في قائمة الانتظار</h4><p class="muted">التسجيل في هذا الفرع مغلق مؤقتا وذلك لاكتمال المقاعد. في حال وجود شاغر سوف يتم إرسال رابط دفع لتفعيل الاشتراك.</p><p class="muted" style="margin:6px 0 0"><b>خلوكم قريبين</b></p></div>
     <button class="btn" data-act="p:home">الرئيسية</button>
     <p class="muted" style="margin:0">الجديد: نفس تسجيل الانتظار الموجود في الموقع يكتمل هنا من التطبيق. جرّب: من «لوحة الموقع» ← قائمة المتدربين، أرسلوا رابط الدفع وارجعوا هنا.</p>`);
   case 'trips': return phone('الرحلات','p:home',`
@@ -868,7 +869,7 @@ const P_STEPS=[
   {id:'home',t:'الرئيسية',d:'نقطة البداية في التطبيق'},
   {id:'login',t:'شاشة الدخول',d:'زر «تذكرة الزوار» — جديد'},
   {id:'kids',t:'اختيار الابن',d:'كل ابن يتجدد لحاله'},
-  {id:'reg',t:'تسجيل ابن جديد',d:'مفتوح أو مغلق أو على الانتظار'},
+  {id:'reg',t:'تسجيل ابن جديد',d:'مفتوح، أو مغلق ويدخل قائمة الانتظار'},
   {id:'terms',t:'السياسة والأحكام',d:'بعد اختيار الفرع — مكانها الجديد'},
   {id:'weeks',t:'اختيار الأسابيع',d:'متصلة أو متفرقة لكل ابن'},
   {id:'progs',t:'برامج الفرع',d:'قبل الملخص والدفع — جديد'},
@@ -1015,7 +1016,7 @@ const E_STEPS=[
 function cycle(sec){
   const ph=[['req','بداية الفترة: الطلب والتسليم',[['مدير الفرع يطلب العهد (الصنف، العدد، ملاحظات)',1],['مسؤول العهد يصرف المتوفر ويحدد غير المتوفر',1],['يرجع الطلب للمدير «سند تسليم واستلام»',0],['المدير يقر بالاستلام',0]]],
             ['buy','أثناء العمل: المشتريات',[['مدير الفرع يشتري ما ينقصه أو غير المتوفر',1],['يسجل كل شراء أول بأول',1],['يوصل آلياً لمسؤول العهد، ويدخله على الفرع ويُحفظ',1]]],
-            ['clr','نهاية الفترة: الكشف والجرد والإخلاء',[['مسؤول العهد يرسل للمدير كشفاً بعهدة الفرع: القديمة والمشتراة',1],['المدير يشيّك على الكشف، يضبط الأعداد، ويسلّم',1],['مسؤول العهد يجرد ويشوف الناقص',0],['إعادة للاستكمال مع ملاحظة النقص',0],['المدير يوقّع، ومع النقص يكتب السبب: تالف، مفقود، غير صالح…',1],['يرجع الكشف لمسؤول العهد ويُحفظ في النظام',0]]]];
+            ['clr','نهاية الفترة: الكشف والجرد والإخلاء',[['مسؤول العهد يرسل للمدير كشفاً بعهدة الفرع: القديمة والمشتراة',1],['المدير يشيّك على الكشف، يضبط الأعداد، ويسلّم',1],['مسؤول العهد يجرد ويشوف الناقص',0],['يختار: حفظ الكشف، أو إعادة للاستكمال مع ملاحظة النقص',1],['عند الإعادة يكتب المدير السبب: تالف، مفقود، غير صالح… وبدون نقص يوقّع',1],['يُحفظ الكشف في النظام عند مسؤول العهد',0]]]];
   return `<div class="cycle">${ph.map(p=>`<button data-sec="${p[0]}" class="${sec===p[0]?'on':''}"><b>${p[1]}</b>${p[2].map(x=>`<span class="${x[1]?'nw':''}">${x[0]}</span>`).join('')}</button>`).join('')}</div><p class="muted" style="margin:0">نفس ترتيب مخططكم وملاحظاتكم: تبدأ من طلب مدير الفرع، وغير المتوفر يشتريه الفرع أثناء العمل ويدخل عهدة عليه. وأثناء العمل كل شراء يتسجل أول بأول. وفي نهاية الفترة يرسل مسؤول العهد للمدير كشفاً بكل عهدته القديمة والمشتراة، يطابقه المدير ويرجعه، وتنتهي بحفظ الكشف في النظام. المواضع الملوّنة توضح التغييرات المقترحة في المسار، وأصل الدورة يعمل عندكم اليوم، ومتابعة عهد الفروع مستمرة طول الفترة.</p>`;
 }
 const AVQ={'كرات سلة':7,'مكعبات بناء':5,'ألوان خشبية':20,'أقماع تدريب':0};
@@ -1031,15 +1032,15 @@ function clItems(){
   const bought=A.purch.filter(p=>p.st==='in').map(p=>({name:p.item,src:'مشتريات أثناء العمل',given:p.qty}));
   return base.concat(bought).map(r=>({...r,ret:r.src==='عهدة بداية العمل'?Math.max(0,r.given-(loss[r.name]||0)):r.given}));
 }
-function clrReady(){const A=S.a, short=clItems().filter(r=>r.ret<r.given); return A.sign&&(A.cl!=='back'||short.every(r=>A.reasons[clItems().indexOf(r)]));}
+function clrReady(){const A=S.a, short=clItems().filter(r=>r.ret<r.given), oth=Object.values(A.reasons).some(v=>String(v).startsWith('سبب آخر')); return A.sign&&(A.cl!=='back'||(short.every(r=>A.reasons[clItems().indexOf(r)])&&(!oth||A.just.trim().length>0)));}
 const NAV=[
  ['الإدارة الأساسية',[['إدارة النادي',[['br','الفروع','تعديل'],['ys','ملخص السنة',''],['prog','برامج الفرع','جديد'],'المجموعات','الحضور والغياب «يومي»','التحضير الأسبوعي']],['المتدربون',[['nr','قائمة المتدربين','موجودة'],'أولياء الأمور','حسابات المتدربين','المدفوعات','الدفعات الحضورية','تقرير المستردات','تذكيرات الدفع','أكواد الخصم','تعليمات بطاقة العضوية','الزوار «تذكرة يوم»','تقرير الزوار اليومي','تفعيل/تعطيل الزوار']],['الرابح الأكثر',['الإنجازات','المخالفات','المكافآت','منح إنجاز','تسجيل مخالفة','أرشيف المخالفات','سجل النقاط','طلبات المكافآت','إحصائيات الرابح الأكثر','إحصائيات بالفرع','ترتيب الفروع','إصدار بطاقات','بيانات البطاقات']],['المناداة',['نظام المناداة','الأرشيف','التقارير','الإعدادات']]]],
  ['الموظفون والتواصل',[['أسرة نوادي',['الموظفون',['ini','المبادرات','تعديل'],['pp','البرامج المقترحة','تعديل'],'تقرير المبادرات','جوائز تميز الفروع','إدخال معطيات التميز','المقترحات','إسناد المهام']],['التوظيف والتواصل',['طلبات التوظيف','ترشحات للتوظيف','أرشيف الطلبات','قوالب العقود','عقود الموظفين','ملاحظات التوظيف','التخصصات الوظيفية','المسميات الوظيفية','الجنسيات','المدن','رسائل التواصل','قائمة الانتظار','الإشعارات']]]],
  ['خدمات إضافية',[['الرحلات',['قائمة الرحلات','إضافة رحلة']],['المقصف',['منتجات المقصف','أقسام المقصف','طلبات المقصف','التقرير اليومي','فتح/إغلاق جميع المقاصف']]]],
  ['الموقع والمحتوى',[['البوابة الإعلامية',['البنر الرئيسي','الرؤية والرسالة','قسم من نحن','صفحة حول نوادي','صور الدائرة','البرامج','إحصائيات الصفحة الرئيسية','الأخبار','الصور','الفيديوهات','آراء العملاء','الشركاء','التواصل الاجتماعي']]]],
- ['العهد والمستودع',[['عهدي',null,'mine'],['العهد والمستودع',['جرد المستودع','سندات التسليم','متابعة الفروع',['req','طلب العهد','جديد'],['buy','المشتريات','جديد'],['clr','إخلاء طرف','تعديل'],'إعدادات العهد','تشغيل النظام وإيقافه']]]],
+ ['العهد والمستودع',[['عهدي',null,'mine'],['العهد والمستودع',['جرد المستودع','سندات التسليم','متابعة الفروع',['req','طلب العهد','تعديل'],['buy','المشتريات','تعديل'],['clr','إخلاء طرف','تعديل'],'إعدادات العهد','تشغيل النظام وإيقافه']]]],
  ['المسابقات',[['المسابقات',['قائمة المسابقات','إضافة مسابقة جديدة']]]],
- ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات','الشروط والسياسات','ملاحظات التسجيل',['wl','تفعيل/تعطيل التسجيل','للمراجعة'],'حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
+ ['الإدارة والتقارير',[['التقارير',null],['النظام',['سجل التدقيق','الإعدادات','سلاسل الموافقات','المستخدمون','الأدوار','السنوات','الشروط والسياسات','ملاحظات التسجيل',['wl','تفعيل/تعطيل التسجيل','تعديل'],'حالة الدفع الإلكتروني','تاريخ بداية الدوام','أسابيع الموسم','أسعار المدد','نظام مدد الاشتراك','التتبع والتحليلات','صفحات SEO','التوجيهات','إعدادات SEO']]]]
 ];
 function navTree(A){
   const leaf=x=>Array.isArray(x)?`<button data-sec="${x[0]}" class="sub ${A.sec===x[0]?'on':''}">${x[1]}${x[2]?`<i class="nw">${x[2]}</i>`:''}</button>`:`<button class="dim sub" data-act="a:noop">${x}</button>`;
@@ -1108,10 +1109,11 @@ function adminScreen(){
     if(st==='count') body=mgr?wait('أرسلت الكشف، ومسؤول العهد يجرد الحين')+full
       :`<p class="muted" style="margin:0">رجع الكشف من مدير الفرع. اجرد العهد واكتب العدد اللي لقيته لكل صنف: ${need?ar(need)+' أصناف فيها نقص.':'لا نواقص.'}</p>
         ${T(['الصنف','المصدر','العدد في الكشف','عدّ المدير','جرد مسؤول العهد','الناقص'],items.map((r,i)=>`<tr class="${r.ret<r.given?'bad':''}"><td>${r.name}</td><td>${srcP(r)}</td><td>${ar(r.given)}</td><td>${ar(r.mg??r.ret)}</td><td><input data-cnt="${i}" value="${r.ret}" inputmode="numeric" style="width:70px;text-align:center"></td><td>${r.given-r.ret>0?ar(r.given-r.ret):'—'}</td></tr>`).join(''))}
-        <div class="webbtns">${need?'<button class="btn" data-act="a:back">إعادة للمدير لاستكمال النقص</button>':'<button class="btn" data-act="a:endcount">لا نواقص: إرسال للمدير للتوقيع</button>'}</div>`;
+        <div class="webbtns">${need?'<button class="btn" data-act="a:back">إعادة لاستكمال النقص</button><button class="btn alt" data-act="a:clrsave">حفظ</button>':'<button class="btn" data-act="a:endcount">لا نواقص: إرسال للمدير للتوقيع</button>'}</div>
+        ${need?'<p class="muted" style="margin:0">تختار: تحفظ الكشف كما هو والنقص مسجل فيه، أو تعيده لمدير الفرع لاستكمال النقص. وإذا ما فيه إعادة ينحفظ الكشف.</p>':''}`;
     if(st==='back') body=mgr?`<div class="card" style="border-color:#F3C1CC"><div class="row"><h4>ملاحظة من مسؤول العهد</h4><span class="pill p-no">${ar(need)} نواقص</span></div><p style="margin:0">عندكم نقص: ${short.map(r=>r.name+' ('+ar(r.given-r.ret)+')').join('، ')}. نأمل إفادتنا عن سبب النقص.</p></div>
         ${T(['الصنف','الناقص','استكمال النقص أو سببه'],short.map(r=>`<tr class="bad"><td>${r.name}</td><td>${ar(r.given-r.ret)}</td><td><select data-rsn="${items.indexOf(r)}">${['اختر','تالف','مفقود','غير صالح','سبب آخر (اكتبه في الملاحظة)','استكملت النقص وسلّمته'].map((o,k)=>`<option ${k===0?'value=""':''} ${A.reasons[items.indexOf(r)]===o?'selected':''}>${o}</option>`).join('')}</select></td></tr>`).join(''))}
-        <div class="field"><span>ملاحظة (اختياري)</span><input id="just" value="${A.just}" placeholder="أي توضيح إضافي عن النقص"></div>
+        <div class="field"><span>ملاحظة (مطلوبة إذا اخترت «سبب آخر»)</span><input id="just" value="${A.just}" placeholder="أي توضيح إضافي عن النقص"></div>
         <label class="chk ${A.sign?'on':''}"><input type="checkbox" id="sign" ${A.sign?'checked':''}> أقر بصحة البيانات وأوقّع على الكشف</label>
         <div class="webbtns"><button class="btn" data-act="a:clrsend" ${clrReady()?'':'disabled'}>إرسال الكشف لمسؤول العهد</button></div>`
       :wait('أُعيد الكشف لمدير الفرع ليسجل سبب النقص');
@@ -1121,11 +1123,11 @@ function adminScreen(){
       :`<div class="card"><h4>${A.hadShort?'رجع الكشف من مدير الفرع ومعه رده على النقص':'وقّع مدير الفرع بدون ملاحظات'}</h4>${A.just?`<p style="margin:6px 0 0">ملاحظة المدير: ${A.just}</p>`:''}</div>${full}
         ${items.some((r,i)=>A.reasons[i]==='استكملت النقص وسلّمته')?`<div class="card" style="border-color:#F0E3C2"><p class="muted" style="margin:0 0 8px">المدير يقول إنه استكمل هذي الأصناف. تأكد من استلامها:</p>${items.map((r,i)=>A.reasons[i]==='استكملت النقص وسلّمته'?`<div class="row" style="margin-bottom:6px"><span>${r.name} (${ar(r.given-r.ret)})</span><button class="btn alt" style="width:auto;padding:5px 12px;font-size:13px" data-conf="${i}">استلمت الاستكمال</button></div>`:'').join('')}</div>`:''}
         <div class="webbtns"><button class="btn" data-act="a:clrok" ${items.some((r,i)=>A.reasons[i]==='استكملت النقص وسلّمته')?'disabled':''}>حفظ الكشف في النظام</button></div>`;
-    if(st==='ok') body=`<div class="card"><div class="row"><h4>الكشف محفوظ في النظام</h4><span class="pill p-ok">محفوظ</span></div></div>${full}<div class="webbtns"><button class="btn alt" data-act="a:clreset">إعادة التجربة</button></div>`;
+    if(st==='ok') body=`<div class="card"><div class="row"><h4>الكشف محفوظ في النظام</h4><span class="pill p-ok">محفوظ</span></div>${A.clDirect?'<p class="muted" style="margin:6px 0 0">حفظه مسؤول العهد بدون إعادة للمدير، والنقص مسجل فيه كما هو.</p>':''}</div>${full}<div class="webbtns"><button class="btn alt" data-act="a:clreset">إعادة التجربة</button></div>`;
     const ix={list:0,check:1,count:2,back:3,sign:3,sent:4,ok:5}[st];
     html=`<h2>كشف عهد نهاية الفترة — إخلاء طرف</h2>
     <div class="grid2"><div class="card"><span class="muted">فترة العمل</span><h4>20 يونيو – 29 يوليو 2026</h4></div><div class="card"><span class="muted">مدير الفرع</span><h4>خالد السبيعي</h4></div><div class="card"><span class="muted">مسؤول العهد</span><h4>فهد القحطاني</h4></div></div>
-    <div class="flow">${['1. مسؤول العهد يرسل الكشف','2. المدير يطابق ويرسل','3. مسؤول العهد يجرد','4. سبب النقص أو التوقيع','5. الحفظ في النظام'].map((l,i)=>`<span class="${i<ix?'ok':i===ix?'on':''}">${l}</span>`).join('')}</div>
+    <div class="flow">${['1. مسؤول العهد يرسل الكشف','2. المدير يطابق ويرسل','3. مسؤول العهد يجرد: حفظ أو إعادة','4. رد المدير عند الإعادة، أو توقيعه بلا نقص','5. الحفظ في النظام'].map((l,i)=>`<span class="${i===3&&A.clDirect?'':i<ix?'ok':i===ix?'on':''}">${l}</span>`).join('')}</div>
     ${body}`;
   }
   if(A.sec==='br'){
@@ -1177,20 +1179,20 @@ function adminScreen(){
     <p class="muted" style="margin:0">جرّب: أغلقه ثم افتح تبويب «الموظف» ← المبادرات.</p>`;
   }
   if(A.sec==='wl'){
-    const O=[['open','التسجيل مفتوح','ولي الأمر يسجل ويدفع مثل اليوم'],['closed','إغلاق التسجيل في هذا الفرع','ما يقدر أحد يسجل في الفرع'],['wait','فتح الانتظار','ولي الأمر يكمل كل البيانات بدون دفع، ويظهر ابنه في المتدربين «تسجيل جديد»']];
+    const O=[['open','التسجيل مفتوح','ولي الأمر يسجل ويدفع ويُقبل مباشرة مثل اليوم'],['closed','إغلاق التسجيل في الفرع','أي شخص يسجل يكمل بياناته بدون دفع، وينتقل لقائمة التسجيلات الجديدة بانتظار إرسال رابط الدفع']];
     html=`<h2>تفعيل/تعطيل التسجيل</h2>
     <div class="grid2"><div class="field"><span>الفرع (لكل فرع حالته، والمثال هنا على النرجس)</span><select><option>فرع النرجس</option></select></div></div>
-    <div class="card"><div class="row"><h4>حالة التسجيل في الفرع</h4><span class="pill p-info">للمراجعة</span></div><p class="muted" style="margin:0 0 10px">إغلاق تسجيل الفرع والتسجيل بدون دفع موجودان اليوم في إعداداتكم. هنا تصور لعرض الخيارين في مكان واحد حسب ملاحظتكم: إغلاق التسجيل في هذا الفرع، أو فتح الانتظار.</p>
+    <div class="card"><div class="row"><h4>حالة التسجيل في الفرع</h4><span class="pill p-info">تعديل</span></div><p class="muted" style="margin:0 0 10px">حسب توضيحكم: إغلاق التسجيل في الفرع معناه فتح الانتظار، وما يحتاج خيار مستقل. أي شخص يسجل إما يُقبل مباشرة، أو ينتقل للتسجيلات الجديدة بانتظار رابط الدفع، عشان بياناته تبقى عندكم وترسلون له أي وقت توفر شاغر.</p>
       <div class="optl">${O.map(o=>`<label class="chk ${A.regMode===o[0]?'on':''}"><input type="radio" name="rm" data-rm="${o[0]}" ${A.regMode===o[0]?'checked':''}> <span>${o[1]}<br><small>${o[2]}</small></span></label>`).join('')}</div></div>
     <div class="webbtns"><button class="btn alt" data-sec="nr">فتح قائمة المتدربين</button></div>
-    <p class="muted" style="margin:0">جرّب: اختاروا «فتح الانتظار»، ثم افتحوا تبويب «ولي الأمر» ← تسجيل ابن جديد. والدفع لاحقاً كخيار عند الدفع ملغي، والتسجيل بدون دفع يبقى للانتظار فقط.</p>`;
+    <p class="muted" style="margin:0">جرّب: اختاروا «إغلاق التسجيل في الفرع»، ثم افتحوا تبويب «ولي الأمر» ← تسجيل ابن جديد. والدفع لاحقاً كخيار عند الدفع ملغي، والتسجيل بدون دفع يبقى للانتظار فقط.</p>`;
   }
   if(A.sec==='nr'){
     const W=A.wait, G=['مجموعة النجوم','مجموعة الأبطال'], nw=W.filter(w=>w.st==='new'||w.st==='link');
     const sb='style="width:auto;padding:6px 12px;font-size:13px"';
     const tl=(n,l)=>`<div class="tile"><b>${ar(n)}</b><span>${l}</span></div>`;
     html=`<h2>المتدربون</h2>
-    <div class="card"><div class="row"><h4>صفحة موجودة اليوم في لوحتكم وتبقى كما هي</h4><span class="oldtag">موجودة اليوم</span></div><p class="muted" style="margin:0">التسجيل بدون دفع عند تفعيل وضع الانتظار، وبطاقة «تسجيل جديد»، وإرسال رابط الدفع: كلها تعمل عندكم في الموقع، وما فيها استحداث عمل جديد. الجديد أن ولي الأمر يكمل نفس التسجيل من داخل التطبيق. المعروض هنا مقتطف مبسط بأسماء وأعداد أمثلة، عشان تكتمل تجربة التطبيق.</p></div>
+    <div class="card"><div class="row"><h4>صفحة موجودة اليوم في لوحتكم وتبقى كما هي</h4><span class="oldtag">موجودة اليوم</span></div><p class="muted" style="margin:0">التسجيل بدون دفع، وبطاقة «تسجيل جديد»، وإرسال رابط الدفع: كلها تعمل عندكم في الموقع، وما فيها استحداث عمل جديد. المطلوب حسب توضيحكم: إغلاق تسجيل الفرع يحوّل أي مسجل لهذي القائمة، ونفس التسجيل يكتمل من داخل التطبيق. المعروض هنا مقتطف مبسط بأسماء وأعداد أمثلة، عشان تكتمل تجربة التطبيق.</p></div>
     <div class="ys">${tl(1+W.length,'الكل')}${tl(W.filter(w=>w.st==='new').length,'تسجيل جديد')}${tl(1+W.filter(w=>w.st==='paid'||w.st==='grp').length,'نشط')}</div>
     <div class="card"><div class="row"><h4>المتدربون — فرع النرجس</h4><span class="oldtag">مقتطف</span></div>
       <div class="tblw"><table class="t"><thead><tr><th>المتدرب</th><th>ولي الأمر</th><th>المجموعة</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>
@@ -1239,7 +1241,7 @@ function adminScreen(){
 const AG=[
  ['العهد','ابدؤوا بطلب العهد وبدّلوا الدور داخله. مسؤول العهد يصحح السند قبل الإقرار، وبعد الإقرار افتحوا عهدي','العهد والمستودع',[['req','طلب العهد'],['mine','عهدي'],['buy','المشتريات'],['clr','إخلاء طرف']],false],
  ['الفروع وبرامجها وملخص السنة','أعداد الطلاب وبرامج كل فرع','إدارة النادي',[['br','الفروع'],['ys','ملخص السنة'],['prog','برامج الفرع']],false],
- ['التسجيل والانتظار','الموجود في الموقع يبقى كما هو، والجديد أن يكتمل من التطبيق','النظام',[['wl','إغلاق التسجيل أو الانتظار','النظام'],['nr','المتدربون: تسجيل جديد','المتدربون']],false],
+ ['التسجيل والانتظار','إغلاق التسجيل يحوّل المسجلين للتسجيلات الجديدة، ويكتمل من التطبيق','النظام',[['wl','فتح وإغلاق التسجيل','النظام'],['nr','المتدربون: تسجيل جديد','المتدربون']],false],
  ['المبادرات والبرامج المقترحة','فتح الاستقبال، ومراجعة البرامج المقترحة','أسرة نوادي',[['ini','المبادرات'],['pp','البرامج المقترحة']],false]
 ];
 function adminGuide(){
@@ -1295,7 +1297,7 @@ document.addEventListener('click',e=>{
     if(n===5){S.role='parent';S.view.parent='app';P.step='login';}
     if(n===6){S.role='emp';E.step='init';E.itype='prog';}
     render(); const tg=document.querySelector('.roles'); if(tg)tg.scrollIntoView({behavior:'smooth',block:'start'});
-    webToast(['','في الملخص زر الدفع فقط، وانحذف «ادفع لاحقاً»','اختاروا «فتح الانتظار»، ثم جربوا التسجيل من تبويب «ولي الأمر» في التطبيق',A.issued?(A.ack?'السند مُقر، وما يتعدل بعد الإقرار. أعيدوا التجربة من دليل اللوحة':'مدير الفرع يكتب بلاغ الخطأ، ومسؤول العهد يصحح السند أو يلغيه قبل الإقرار'):(A.reqSent?'اضغطوا «إصدار سند التسليم» ثم يظهر زر التصحيح':'بدّلوا إلى «مدير الفرع» وأرسلوا الطلب أول، ثم أصدروا السند'),'بعد اسم الابن والفرع تطلع السياسة والأحكام','زر «تذكرة الزوار» تحت «تسجيل الدخول»','اكتبوا الفكرة وأضيفوا الصور ثم أرسلوها'][n]); return;}
+    webToast(['','في الملخص زر الدفع فقط، وانحذف «ادفع لاحقاً»','اختاروا «إغلاق التسجيل في الفرع»، ثم جربوا التسجيل من تبويب «ولي الأمر» في التطبيق',A.issued?(A.ack?'السند مُقر، وما يتعدل بعد الإقرار. أعيدوا التجربة من دليل اللوحة':'مدير الفرع يكتب بلاغ الخطأ، ومسؤول العهد يصحح السند أو يلغيه قبل الإقرار'):(A.reqSent?'اضغطوا «إصدار سند التسليم» ثم يظهر زر التصحيح':'بدّلوا إلى «مدير الفرع» وأرسلوا الطلب أول، ثم أصدروا السند'),'بعد اسم الابن والفرع تطلع السياسة والأحكام','زر «تذكرة الزوار» تحت «تسجيل الدخول»','اكتبوا الفكرة وأضيفوا الصور ثم أرسلوها'][n]); return;}
   if(d.role){S.role=d.role;S.p.shot=null;S.e.shot=null;render();return;}
   if(d.jump){S.p.shot=null;S.e.shot=null;const [k,id]=d.jump.split(':'); ({p:P,s:T,e:E})[k].step=id; if(k==='p'&&id==='details')P.paid=true; render(); return;}
   if(d.view){S.view[S.role]=d.view; if(S.role==='parent'){P.shot=null; if(d.tologin)P.step='login'; else if(d.view==='web'&&!['home','reg','terms','kids','weeks','progs','summary','pay','done','waitdone','details','login','visitor'].includes(P.step))P.step='home';} render();return;}
@@ -1326,8 +1328,8 @@ document.addEventListener('click',e=>{
     if(a==='unshot'){P.shot=null;render();return;}
     if(a==='tripok'){toast('تم تسجيل موافقتك على مشاركة سارة');P.step='trips';render();return;}
     if(a==='tripno'){toast('تم تسجيل رفضك');P.step='trips';render();return;}
-    if(a==='toterms'){if(A.regMode==='closed')return; P.newName=cl($('#rn')?.value)||'نورة أحمد'; P.viaLink=false; P.payW=-1; P.agree=false; P.step='terms'; render(); return;}
-    if(a==='regnext'){if(!P.agree){toast('وافقوا على السياسة والأحكام أول');return;} const nm=((P.newName||'نورة أحمد').trim().split(' ')[0])||'نورة'; const full=cl(P.newName)||'نورة أحمد'; let i=P.kids.findIndex(x=>x.isNew&&!x.paid&&!x.wsent); if(i<0){P.kids.push({name:nm,full,on:true,w:[],isNew:true}); i=P.kids.length-1;} else {P.kids[i].name=nm;P.kids[i].full=full;} P.kids.forEach(x=>x.on=!!x.isNew); P.kid=i; P.step='weeks'; render(); return;}
+    if(a==='toterms'){P.newName=cl($('#rn')?.value)||'نورة أحمد'; P.viaLink=false; P.payW=-1; P.agree=false; P.step='terms'; render(); return;}
+    if(a==='regnext'){if(!P.agree){toast('وافقوا على السياسة والأحكام أول');return;} const nm=((P.newName||'نورة أحمد').trim().split(' ')[0])||'نورة'; const full=cl(P.newName)||'نورة أحمد'; let i=P.kids.findIndex(x=>x.isNew&&!x.paid&&!x.wsent); if(i<0){P.kids.push({name:nm,full,on:true,w:[],isNew:true}); i=P.kids.length-1;} else {P.kids[i].name=nm;P.kids[i].full=full;} P.kids.forEach((x,j)=>x.on=j===i); P.kid=i; P.step='weeks'; render(); return;}
     if(a==='code'){const v=cl($('#code')?.value); P.code=v; P.codeState=v.toUpperCase()==='NAWADI'?'ok':v?'bad':''; render(); return;}
     if(a==='waitsend'){const kd=P.kids[P.kid]; if(!kd||!kd.isNew||kd.wsent||!kd.w.length)return; kd.wsent=true; A.wait.push({name:kd.full||kd.name,par:'أبو عبدالله',st:'new',wk:[...new Set(kd.w)],mine:true}); P.step='waitdone'; render(); return;}
     if(a.startsWith('wpay_')){const wi=+a.slice(5), w=A.wait[wi]; if(!w||!w.mine||w.st!=='link')return; let i=P.kids.findIndex(x=>x.isNew&&!x.paid&&x.wsent&&x.full===w.name); if(i<0){P.kids.push({name:w.name.split(' ')[0],full:w.name,on:true,w:w.wk.slice(),isNew:true,wsent:true}); i=P.kids.length-1;} P.kids.forEach((x,j)=>x.on=j===i); P.kid=i; P.viaLink=true; P.payW=wi; P.code='';P.codeState=''; P.shot=null; P.step='pay'; render(); return;}
@@ -1388,8 +1390,9 @@ document.addEventListener('click',e=>{
     if(a==='back'){A.hadShort=true;A.cl='back';render();webToast('أُعيد الكشف لمدير الفرع مع ملاحظة النقص');return;}
     if(a==='endcount'){A.cl='sign';render();webToast('وصل الكشف لمدير الفرع للتوقيع');return;}
     if(a==='clrsend'){A.cl='sent';render();webToast('رجع الكشف لمسؤول العهد');return;}
+    if(a==='clrsave'){if(A.cl!=='count'||!A.clItems||!A.clItems.some(r=>r.ret<r.given))return;A.clDirect=true;A.hadShort=false;A.sign=false;A.cl='ok';render();webToast('حُفظ الكشف في النظام، والنقص مسجل فيه');return;}
     if(a==='clrok'){A.cl='ok';render();webToast('حُفظ الكشف في النظام');return;}
-    if(a==='clreset'){A.hadShort=false;A.cl='list';A.clItems=null;A.reasons={};A.just='';A.sign=false;render();return;}
+    if(a==='clreset'){A.clDirect=false;A.hadShort=false;A.cl='list';A.clItems=null;A.reasons={};A.just='';A.sign=false;render();return;}
     if(a==='toggle'){A.open=!A.open;A.log.unshift((A.open?'تم الفتح':'تم الإغلاق')+' — مسؤول النظام — الآن');render();return;}
   }
 });
@@ -1399,7 +1402,7 @@ document.addEventListener('change',e=>{
   if(t.dataset.call!==undefined){E.calls[+t.dataset.call]=t.checked;render();}
   if(t.id==='sign'){A.sign=t.checked;render();}
   if(t.id==='agree'){P.agree=t.checked;render();}
-  if(t.dataset.rm){A.regMode=t.dataset.rm;render();webToast(A.regMode==='wait'?'فُتح الانتظار في الفرع':A.regMode==='closed'?'أُغلق التسجيل في الفرع':'التسجيل مفتوح في الفرع');}
+  if(t.dataset.rm){A.regMode=t.dataset.rm;render();webToast(A.regMode==='closed'?'أُغلق التسجيل في الفرع، والمسجلون ينتقلون للتسجيلات الجديدة بدون دفع':'التسجيل مفتوح في الفرع');}
   if(t.id==='pledge'){A.pledge=t.checked;render();}
   if(t.dataset.cnt!==undefined){const r=A.clItems[+t.dataset.cnt]; r.ret=Math.max(0,Math.floor(+t.value||0)); render();}
   if(t.dataset.rsn!==undefined){A.reasons[t.dataset.rsn]=t.value; render();}
@@ -1407,7 +1410,7 @@ document.addEventListener('change',e=>{
 });
 document.addEventListener('input',e=>{
   if(e.target.id==='dsp'){dspDraft=e.target.value.replace(/[<>&"`]/g,'').slice(0,2000);return;}
-  if(e.target.id==='just'){S.a.just=e.target.value.replace(/[<>&"`]/g,''); return; const btn=document.querySelector('[data-act="a:clrsend"]'); if(btn) btn.disabled=!clrReady();}
+  if(e.target.id==='just'){S.a.just=e.target.value.replace(/[<>&"`]/g,''); const btn=document.querySelector('[data-act="a:clrsend"]'); if(btn) btn.disabled=!clrReady();}
 });
 function freshA(){try{localStorage.removeItem(SKEY);}catch(e){} const f=JSON.parse(A0);Object.keys(S.a).forEach(k=>delete S.a[k]);Object.assign(S.a,f);S.role='parent';}
 if(restored){try{const keep=[S.a.sec,S.a.who];const kp=S.a.pwho;for(const sc of SECS)for(const w of ['mgr','cust']){S.a.sec=sc;S.a.who=w;S.a.pwho=w==='mgr'?'mgr':'bud';adminScreen();adminGuide();}S.a.sec=keep[0];S.a.who=keep[1];S.a.pwho=kp;}catch(_){freshA();}}
